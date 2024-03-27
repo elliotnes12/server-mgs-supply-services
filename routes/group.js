@@ -11,4 +11,4 @@ api.post("/group",[mdAuth.asureAuth,mdUpload],groupController.create);
 
 
 
-export const chatRoutes = api;
+export const chatGroupRoutes = api;
