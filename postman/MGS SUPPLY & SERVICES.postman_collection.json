@@ -1,0 +1,856 @@
+{
+	"info": {
+		"_postman_id": "1b80ab22-0a0c-4f0c-8a12-8ee1075b4438",
+		"name": "MGS SUPPLY & SERVICES",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "2509307"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "getMe",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/user/me",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsersById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/user/662a94a93c666b5e3c670f4f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"user",
+								"662a94a93c666b5e3c670f4f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Chats",
+			"item": [
+				{
+					"name": "newChat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"participant_id_one\":\"65fa792ff12313e8e299ce52\",\r\n    \"participant_id_two\":\"65fa77243e4d7d38ef97e133\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/chat",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findChatsByUser",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "infoChat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/65fd3ac8300461965de2caa4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"65fd3ac8300461965de2caa4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteChat",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ChatMessages",
+			"item": [
+				{
+					"name": "MessageText",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"chat_id\":\"65fd3ac8300461965de2caa4\",\r\n  \"message\":\"Nuevo mensaje 5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MessagesImg",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"value": "",
+									"type": "file"
+								},
+								{
+									"key": "chat_id",
+									"value": "65fd3ac8300461965de2caa4",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllMessages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/65fd3ac8300461965de2caa4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"65fd3ac8300461965de2caa4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTotalMessages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/total/65fd3ac8300461965de2caa4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"total",
+								"65fd3ac8300461965de2caa4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastMessage",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/last/65fd3ac8300461965de2caa4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"last",
+								"65fd3ac8300461965de2caa4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "GroupsChat",
+			"item": [
+				{
+					"name": "createGroup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"chat_id\":\"65fd3ac8300461965de2caa4\",\r\n  \"message\":\"Nuevo mensaje 5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/group",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"group"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Roles",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/roles",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"roles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddRole",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"customer\",\r\n    \"description\":\"clientes del app\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/role",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"role"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Permissions",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/permissions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"permissions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CreatePermission",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"type\": \"CHAT_VIEW\",\r\n  \"active\": true,\r\n  \"roles\": [\r\n    \"660bbc337c24fe35ef81b94d\"\r\n   ] \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/permission",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"permission"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "serviceOrder",
+			"item": []
+		},
+		{
+			"name": "employees",
+			"item": [
+				{
+					"name": "createEmployee",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"Roberto\",\r\n  \"lastName\": \"Pineda\",\r\n  \"active\": true,\r\n  \"type\": \"employee\",\r\n  \"idEmployee\": \"1070\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/employee",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getEmployees",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/employees",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"employees"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "companies",
+			"item": [
+				{
+					"name": "allCompanies",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3977/api/companies",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"companies"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "addCompany",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"company 3\",\r\n    \"active\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/company",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"company"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "customers",
+			"item": [
+				{
+					"name": "addCustomerr",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"Roberto\",\r\n    \"lastName\":\"pineda\",\r\n    \"otherCompany\":\"Indra\",\r\n    \"telephone\":\"3434344344\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.environment.set(\"accessToken\", jsonData.data.access);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"email\":\"roberto12@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n \"refreshToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsInVzZXJfaWQiOiI2NjJhOTJiMjNjNjY2YjVlM2M2NzBmMzEiLCJpYXQiOjE3MTYyMTg0NTYsImV4cCI6MTcxODg5Njg1Nn0.Is2nzp2RkseWn0HU8nCaS8f6rdH43E9d7EJPI9dsTXg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/refresh_access_token",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"refresh_access_token"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"elliotuiadud884899gmail.com\",\r\n    \"password\":\"1234567\",\r\n    \"idEmployee\":\"1001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
