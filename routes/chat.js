@@ -1,16 +1,16 @@
 import express from "express";
-import { ChatController } from "../controllers/chat.js";
 import { mdAuth } from "../middlewares/authenticated.js";
+import { chatController } from "../modules/chat/infrastructure/web/chatController.js";
 
 const api = express.Router();
 
-api.post("/chat",[mdAuth.asureAuth],ChatController.createChat);
+api.post("/chat",[mdAuth.asureAuth],chatController.save);
 
-api.get("/chat",[mdAuth.asureAuth],ChatController.getAll);
+api.delete("/chat/:id",[mdAuth.asureAuth],chatController.deleteChat);
 
-api.delete("/chat/:id",[mdAuth.asureAuth],ChatController.deleteChat);
+api.get("/chat",[mdAuth.asureAuth],chatController.getAllChatsByUserId);
 
-api.get("/chat/:id",[mdAuth.asureAuth],ChatController.getChat);
+api.get("/chat/:id",[mdAuth.asureAuth],chatController.getChatById);
 
 
 export const chatRoutes = api;

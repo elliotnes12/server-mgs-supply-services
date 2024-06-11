@@ -7,7 +7,9 @@ const UserSchema = mongoose.Schema({
     role: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Role"
-    }
+    },
+    validationCode: { type: String },
+    validationCodeExpires: { type: String }
 });
 
 

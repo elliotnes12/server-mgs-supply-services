@@ -5,10 +5,6 @@ export class EmployeeRepository{
         throw new Error("Method 'findEmployeeById' must be implemented.")
     }
 
-    findUpdateEmployeeById(id,userId){
-        throw new Error("Method 'findUpdateEmployeeById' must be implemented.")
-    }
-
     findAll(){
         throw new Error("Method 'findAll' must be implemented.")
     }

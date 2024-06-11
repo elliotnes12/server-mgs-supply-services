@@ -13,18 +13,15 @@ export class MongoEmployeeRepository extends EmployeeRepository {
     async findAll(){
         return await Employee.find();    
     }
+    
+    async find(filter){
+        return await Employee.find(filter);    
+    }
 
     async findEmployeeById(idEmployee) {
         return await Employee.findOne({ idEmployee: idEmployee });
     }
 
-    async findUpdateEmployeeById(id,userId){
-        return  await Employee.findOneAndUpdate(
-            { idEmployee: id },
-            { user: userId},
-            { new: true }
-        );
-    }
 
 }
 

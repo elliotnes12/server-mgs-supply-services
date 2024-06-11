@@ -104,6 +104,176 @@
 			]
 		},
 		{
+			"name": "ChatMessages",
+			"item": [
+				{
+					"name": "MessageText",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"chat_id\":\"665020e2aa7a9ff4f83bc6c9\",\r\n  \"message\":\"segundo mensaje\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "MessagesImg",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image",
+									"value": "",
+									"type": "file"
+								},
+								{
+									"key": "chat_id",
+									"value": "665020e2aa7a9ff4f83bc6c9",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/image",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"image"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllMessages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/665020e2aa7a9ff4f83bc6c9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"665020e2aa7a9ff4f83bc6c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getTotalMessages",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/total/665020e2aa7a9ff4f83bc6c9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"total",
+								"665020e2aa7a9ff4f83bc6c9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getLastMessage",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3977/api/chat/message/last/665020e2aa7a9ff4f83bc6c9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"chat",
+								"message",
+								"last",
+								"665020e2aa7a9ff4f83bc6c9"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Chats",
 			"item": [
 				{
@@ -119,7 +289,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"participant_id_one\":\"65fa792ff12313e8e299ce52\",\r\n    \"participant_id_two\":\"65fa77243e4d7d38ef97e133\"\r\n}",
+							"raw": "{\r\n    \"participant_id_one\":\"662a92b23c666b5e3c670f31\",\r\n    \"participant_id_two\":\"6625f73fce6f9c6202f0cefe\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -168,7 +338,7 @@
 					"response": []
 				},
 				{
-					"name": "infoChat",
+					"name": "getChatById",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -179,7 +349,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3977/api/chat/65fd3ac8300461965de2caa4",
+							"raw": "http://localhost:3977/api/chat/665020e2aa7a9ff4f83bc6c9e",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -188,7 +358,7 @@
 							"path": [
 								"api",
 								"chat",
-								"65fd3ac8300461965de2caa4"
+								"665020e2aa7a9ff4f83bc6c9e"
 							]
 						}
 					},
@@ -197,7 +367,7 @@
 				{
 					"name": "deleteChat",
 					"request": {
-						"method": "GET",
+						"method": "DELETE",
 						"header": [
 							{
 								"key": "Authorization",
@@ -205,8 +375,17 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3977/api/chat",
+							"raw": "http://localhost:3977/api/chat/66500c727181630c2f5ec6a0",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -214,7 +393,8 @@
 							"port": "3977",
 							"path": [
 								"api",
-								"chat"
+								"chat",
+								"66500c727181630c2f5ec6a0"
 							]
 						}
 					},
@@ -223,10 +403,10 @@
 			]
 		},
 		{
-			"name": "ChatMessages",
+			"name": "serviceOrder",
 			"item": [
 				{
-					"name": "MessageText",
+					"name": "createOrderManual",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -238,7 +418,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"chat_id\":\"65fd3ac8300461965de2caa4\",\r\n  \"message\":\"Nuevo mensaje 5\"\r\n}",
+							"raw": "{\r\n  \"date\": \"2024-06-15\",\r\n  \"location\": {\r\n    \"type\": \"manual\",\r\n    \"address\": {\r\n      \"street\": \"123 Main St\",\r\n      \"city\": \"Springfield\",\r\n      \"state\": \"IL\",\r\n      \"zipCode\": \"62701\",\r\n      \"country\": \"USA\"\r\n    }\r\n  },\r\n  \"comments\": \"This is a test appointment.\",\r\n  \"category\": \"cleaning\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -246,7 +426,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3977/api/chat/message",
+							"raw": "http://localhost:3977/api/service-order",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -254,15 +434,14 @@
 							"port": "3977",
 							"path": [
 								"api",
-								"chat",
-								"message"
+								"service-order"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "MessagesImg",
+					"name": "createOrderGoogle",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -273,22 +452,16 @@
 							}
 						],
 						"body": {
-							"mode": "formdata",
-							"formdata": [
-								{
-									"key": "image",
-									"value": "",
-									"type": "file"
-								},
-								{
-									"key": "chat_id",
-									"value": "65fd3ac8300461965de2caa4",
-									"type": "text"
+							"mode": "raw",
+							"raw": "{\r\n  \"date\": \"2024-06-15\",\r\n  \"userId\": \"60d0fe4f5311236168a109ca\",\r\n  \"location\": {\r\n    \"type\": \"google\",\r\n    \"google\": {\r\n      \"latitude\": 39.7817,\r\n      \"longitude\": -89.6501\r\n    }\r\n  },\r\n  \"comments\": \"This is a test appointment.\",\r\n  \"category\": \"cleaning\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
 								}
-							]
+							}
 						},
 						"url": {
-							"raw": "http://localhost:3977/api/chat/message/image",
+							"raw": "http://localhost:3977/api/service-order",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -296,18 +469,16 @@
 							"port": "3977",
 							"path": [
 								"api",
-								"chat",
-								"message",
-								"image"
+								"service-order"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getAllMessages",
+					"name": "updateServiceOrder",
 					"request": {
-						"method": "GET",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "Authorization",
@@ -315,8 +486,17 @@
 								"type": "text"
 							}
 						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"id\":\"6667d4fc61efa936bc01401a\",\r\n   \"employees\":[\r\n      \"662a93b13c666b5e3c670f41\"\r\n   ]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:3977/api/chat/message/65fd3ac8300461965de2caa4",
+							"raw": "http://localhost:3977/api/service-order",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -324,27 +504,25 @@
 							"port": "3977",
 							"path": [
 								"api",
-								"chat",
-								"message",
-								"65fd3ac8300461965de2caa4"
+								"service-order"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "getTotalMessages",
+					"name": "findAllBySupervisor",
 					"request": {
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer  {{accessToken}}",
+								"value": "Bearer {{accessToken}}",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3977/api/chat/message/total/65fd3ac8300461965de2caa4",
+							"raw": "http://localhost:3977/api/service-order/supervisor/6667a8e6f057c1491427de1b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -352,39 +530,9 @@
 							"port": "3977",
 							"path": [
 								"api",
-								"chat",
-								"message",
-								"total",
-								"65fd3ac8300461965de2caa4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getLastMessage",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer  {{accessToken}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "http://localhost:3977/api/chat/message/last/65fd3ac8300461965de2caa4",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3977",
-							"path": [
-								"api",
-								"chat",
-								"message",
-								"last",
-								"65fd3ac8300461965de2caa4"
+								"service-order",
+								"supervisor",
+								"6667a8e6f057c1491427de1b"
 							]
 						}
 					},
@@ -565,10 +713,6 @@
 			]
 		},
 		{
-			"name": "serviceOrder",
-			"item": []
-		},
-		{
 			"name": "employees",
 			"item": [
 				{
@@ -584,7 +728,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"Roberto\",\r\n  \"lastName\": \"Pineda\",\r\n  \"active\": true,\r\n  \"type\": \"employee\",\r\n  \"idEmployee\": \"1070\"\r\n}",
+							"raw": "{\r\n  \"name\": \"jose\",\r\n  \"lastName\": \"Alberto\",\r\n  \"active\": false,\r\n  \"type\": \"supervisor\",\r\n  \"idEmployee\": \"10322\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -704,13 +848,39 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\":\"Roberto\",\r\n    \"lastName\":\"pineda\",\r\n    \"otherCompany\":\"Indra\",\r\n    \"telephone\":\"3434344344\"\r\n}",
+							"raw": "{\r\n    \"name\":\"LopezCarso\",\r\n    \"lastName\":\"pineda\",\r\n    \"otherCompany\":\"Indra\",\r\n    \"telephone\":\"3434344344\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
+						"url": {
+							"raw": "http://localhost:3977/api/customer",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"customer"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAllCustomers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}",
+								"type": "text"
+							}
+						],
 						"url": {
 							"raw": "http://localhost:3977/api/customer",
 							"protocol": "http",
@@ -751,8 +921,11 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"exec": [],
-								"type": "text/javascript"
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
 							}
 						}
 					],
@@ -761,7 +934,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n     \"email\":\"roberto12@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
+							"raw": "{\r\n    \"email\":\"rufus44234i444344993434@gmail.com\",\r\n    \"password\":\"1234567\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -779,6 +952,128 @@
 								"api",
 								"auth",
 								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "validateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.environment.set(\"accessToken\", jsonData.data.access);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\":\"3-8-5-3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/validate_code",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"validate_code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "generateCode",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"   var jsonData = pm.response.json();\r",
+									"\r",
+									"    pm.environment.set(\"accessToken\", jsonData.data.access);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{accessToken}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"rufus44234i444344993434@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/generate_code",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"generate_code"
 							]
 						}
 					},
@@ -815,7 +1110,7 @@
 					"response": []
 				},
 				{
-					"name": "createUser",
+					"name": "createUserEmployee",
 					"request": {
 						"method": "POST",
 						"header": [
@@ -827,7 +1122,43 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"elliotuiadud884899gmail.com\",\r\n    \"password\":\"1234567\",\r\n    \"idEmployee\":\"1001\"\r\n}",
+							"raw": "{\r\n    \"email\":\"elliotgarcia091987@gmail.com\",\r\n    \"password\":\"1234567\",\r\n    \"idEmployee\":\"1001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3977/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3977",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUserEmpleadoCustomer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"rufus44234i444344993434@gmail.com\",\r\n    \"password\":\"1234567\",\r\n    \"name\":\"juan carlos\",\r\n    \"lastName\":\"lopez\",\r\n    \"telephone\":\"343434344\"    \r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

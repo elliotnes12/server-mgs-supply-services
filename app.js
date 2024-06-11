@@ -6,17 +6,22 @@ import morgan from 'morgan';
 import {authRoutes, chatGroupRoutes, chatMessageRoutes, chatRoutes, employeeRoutes, permissionRoutes, userRoutes}  from './routes/index.js';
 import  swaggerUI  from "swagger-ui-express";
 import  swaggerJsdoc    from "swagger-jsdoc";
-import { SWAGGER_SPEC } from "./utils/constants.js";
+import { DATE_ZONE, SWAGGER_SPEC } from "./utils/constants.js";
 import { companyRoutes } from "./routes/company.js";
 import { customerRoutes } from "./routes/customer.js";
 import { roleRoutes } from "./routes/role.js";
+import fs from "fs";
+import { fileURLToPath } from 'url';
+import path from 'path';
+import { orderRoutes } from "./routes/service_order.js";
 
 const app = express();
 const server = http.createServer(app);
 initSocketServer(server);
 
 
-// Parse application/json
+
+
 app.use(express.json());
 
 // Parse application/x-www-form-urlencoded
@@ -53,9 +58,9 @@ app.use("/api",companyRoutes);
 
 app.use("/api",customerRoutes);
 
+app.use("/api",orderRoutes);
+
 //Swagger
 app.use("/api-doc",swaggerUI.serve,swaggerUI.setup(swaggerJsdoc(SWAGGER_SPEC)));
-
-
 
 export { server };

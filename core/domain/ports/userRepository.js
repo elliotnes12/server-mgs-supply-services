@@ -1,7 +1,7 @@
 
 
 export class userRepository{
-    save(user){
+    save(user,type,repositories){
         throw new Error("Method 'save' must be implemented.")
     }
     findUserByEmail(email){
@@ -15,5 +15,11 @@ export class userRepository{
     }
     findAll(){
         throw new Error("Method 'findAll' must be implemented.")
+    }
+    findUpdateEmployeeById(id,userId){
+        throw new Error("Method 'findUpdateEmployeeById' must be implemented.")
+    }
+    findUpdateUserById(id, data){
+        throw new Error("Method 'findUpdateUserById' must be implented.")
     }
 }

@@ -11,8 +11,5 @@ api.get("/user/me",[mdAuth.asureAuth],userController.getMe);
 api.get("/users",[mdAuth.asureAuth],userController.getAll);
 api.get("/user/:id",[mdAuth.asureAuth],userController.findUserById);
 
-/*
-api.patch("/user/me",[mdAuth.asureAuth,mdUpload],userController.updateUser);
-*/
 
 export const userRoutes = api;

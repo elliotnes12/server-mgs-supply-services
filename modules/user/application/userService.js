@@ -44,13 +44,13 @@ export class UserService {
         try{
 
             const user = await this.repositories.userRepository.findUserByIdWithRole(userId)
-            return { meta: { code: 200, module: "USER", message: "success" }, data: {
-              user
-            } };
+            
+            return { meta: { code: 200, module: "USER", message: "success" }, data: user };
 
         }
         catch(error){
         
+            console.log(error);
             return { meta: { code: 400, module: "USER", message: "User not found" } };
         }
           

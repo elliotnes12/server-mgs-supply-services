@@ -1,7 +1,10 @@
 import { UserModel } from "../domain/models/userModel.js";
 import bcrypt from "bcryptjs";
 import { token } from "../../../utils/jwt.js";
-import { ETQ_LOG } from "../../../utils/constants.js";
+import { DATE_ZONE, ETQ_LOG } from "../../../utils/constants.js";
+import { generateRandomNumbers, getExpirationTime, isDateLessThanOrEqualToCurrent } from "../../../utils/utils.js";
+import { emailController } from "../../../utils/Email.js";
+
 
 export class AuthService {
 
@@ -10,7 +13,60 @@ export class AuthService {
 
     }
 
+    async generateCode(userId,email){
 
+        try{
+
+            const numbers = generateRandomNumbers(4);
+            const expire = getExpirationTime();
+
+            await this.repositories.userRepository.findUpdateUserById(userId,{
+                validationCode:numbers.join('-').trim(),
+                validationCodeExpires: expire
+            });
+
+            
+            emailController.sendEmail(email,numbers.join('-').trim());
+
+            return { meta: { code: 200, module: "AUTH", message: "success" } };
+            
+
+        }catch(error){
+
+            console.log(error);
+            return { meta: { code: 400, module: "AUTH", message: "error generate code" } };
+        }
+    }
+
+
+    async activateUser(dataCode,userId){
+
+        try{
+
+            const {code} = dataCode;
+
+            const user = await this.repositories.userRepository.findUserById(userId);
+            const isDateLess = isDateLessThanOrEqualToCurrent(user.validationCodeExpires, DATE_ZONE);
+
+
+            if(user.validationCode == code && isDateLess){
+            
+                await this.repositories.userRepository.findUpdateUserById(userId,{
+                    active:true
+                });
+                return { meta: { code: 200, module: "AUTH", message: "success" } };
+            }
+
+
+
+            throw new Error();
+
+        }catch(error){
+
+            console.log(error);
+            return { meta: { code: 400, module: "AUTH", message: "invalid code" } };
+        }
+    }
     async refreshToken(refreshToken) {
 
 
@@ -59,26 +115,44 @@ export class AuthService {
                 return { meta: { code: 401, module: "AUTH", message: "No Authorized" } };
             }
 
+            
+            const isDateLess = isDateLessThanOrEqualToCurrent(user.validationCodeExpires, DATE_ZONE);
+
+            if (!user.active && !isDateLess) {
+
+                const numbers = generateRandomNumbers(4);
+                const expire = getExpirationTime();
+
+                await this.repositories.userRepository.findUpdateUserById(user._id,{
+                    validationCode:numbers.join('-').trim(),
+                    validationCodeExpires: expire
+                });
+
+                emailController.sendEmail(email,numbers.join('-').trim());
+
+            }     
 
             return {
                 meta: { code: 200, module: "AUTH", message: "success" },
                 data: {
                     access: token.createAccessToken(user),
-                    refresh: token.createRefreshToken(user)
+                    refresh: token.createRefreshToken(user),
+                    active: user.active
                 }
             };
 
         } catch (error) {
-
+            console.log(error);
             return { meta: { code: 400, module: "AUTH", message: "User not found" } }
         }
 
     }
 
 
+
     async save(userData) {
 
-        const { email, password, idEmployee } = userData;
+        const { email, password, idEmployee , name, telephone, lastName } = userData;
         let idRole = undefined;
         let roleName = "customer";
         let active = false;
@@ -95,8 +169,6 @@ export class AuthService {
             }
 
             roleName = employee.type;
-            active = false;
-
         }
 
 
@@ -114,19 +186,28 @@ export class AuthService {
 
             const userModel = new UserModel(email, hashPassword, active, idRole);
 
-            const user = await this.repositories.userRepository.save(userModel);
+            
+            let infoUser = undefined;
 
-            if (idEmployee) {
-                await this.repositories.employeeRepository.findUpdateEmployeeById(idEmployee, user._id);
+            if(idEmployee){
+                infoUser = {idEmployee:idEmployee};
+            }else{
+                infoUser =  {name:name,telephone:telephone,lastName:lastName};
             }
 
+
+            const user = await this.repositories.userRepository.save(userModel,infoUser);
 
             return { meta: { code: 201, module: "AUTH", message: "success" }, data: user };
 
 
         } catch (error) {
 
-            return { meta: { code: 400, module: "AUTH", message: "Error" } };
+             const message = error.message != undefined &&
+             error.message.indexOf("duplicate key")? "Usuario ya existente": "Error";
+             
+             
+             return { meta: { code: 400, module: "AUTH", message: message } };
         }
 
     }

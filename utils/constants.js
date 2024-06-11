@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import path  from "path";
 
 
@@ -44,6 +43,8 @@ export const MSG_AUTH_FAILED = "Authentication failed.";
 export const MSG_REQUIRED_FIELDS = "Required fields are missing.";
 
 export const ETQ_LOG = "Module -> FUNCTION[ %s ] -> MSG[ %s ]";
+
+export const DATE_ZONE = "America/Mexico_City";
 
 export const MODULES = {
       MODULE_ROLE:"ROLE",

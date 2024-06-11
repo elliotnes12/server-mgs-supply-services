@@ -1,10 +1,8 @@
-
 import mongoose from "mongoose";
 
 const CustomerSchema = mongoose.Schema({
     name:String,
-    lastName:String, 
-    active:Boolean,
+    lastName:{type: String , default: null}, 
     telephone:{type: String , default: null},
     company: {
         type: mongoose.Schema.Types.ObjectId,
