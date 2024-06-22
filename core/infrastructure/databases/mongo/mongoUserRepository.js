@@ -53,16 +53,19 @@ export class MongoUserRepository extends userRepository {
             .populate('role');
 
             const roleName = user.role.name;
-
+        
+            console.log("encontraste rol");
+            console.log(roleName)
 
             if(roleName === "customer"){
-                const customer = await Customer.find({
+                const customer = await Customer.findOne({
                     user:user._id
                 })
                 return {user,customer};
             }
 
-            const employee =  Employee.find({
+
+            const employee = await Employee.findOne({
                  user:user._id
             });
 

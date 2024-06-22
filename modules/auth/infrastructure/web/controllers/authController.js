@@ -41,6 +41,7 @@ const registerUser = async (req, resp) => {
         resp.status(response.meta.code).send(response);
     }
     catch (error) {
+        console.log(error)
         resp.status(400).send("error");
     }
 }

@@ -35,6 +35,7 @@ const getMe = async (req, resp) => {
         return resp.status(response.meta.code).send(response);
     }
     catch (error) {
+        console.log(error);
         return resp.status(400).send("error");
     }
 

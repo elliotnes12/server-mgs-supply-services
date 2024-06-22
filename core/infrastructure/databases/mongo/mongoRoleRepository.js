@@ -8,8 +8,9 @@ export class MongoRoleRepository extends RoleRepository{
 
 
     async getRoleByName(name){
+        console.log(name)
         const role = await Role.findOne({ name: name });
-        return role._id;
+        return role? role._id : undefined;
     }
 
     async findAll(){
