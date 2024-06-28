@@ -12,37 +12,55 @@ const employeeService = new EmployeeService(repositories);
 
 
 
-const findAll = async (req,resp) =>{
+const findAll = async (req, resp) => {
 
-    try{
+    try {
 
-       const response = await employeeService.findAll();
-       return resp.status(response.meta.code).send(response);  
+        const response = await employeeService.findAll();
+        return resp.status(response.meta.code).send(response);
 
     }
-    catch(error){
+    catch (error) {
 
-        return resp.status(400).send({meta:{code:400,message:"Error",module:"EMPLOYEE"}});
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
+    }
+};
+
+const findAllByUser = async (req, resp) => {
+
+    try {
+
+
+        const { user_id } = req.user;
+
+        const response = await employeeService.findAllByUser(user_id);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
     }
 };
 
 
-const createEmployee = async (req,resp) =>{
+const createEmployee = async (req, resp) => {
 
-    try{
+    try {
 
-       const response = await employeeService.createEmployee(req.body);
-       return resp.status(response.meta.code).send(response);  
+        const response = await employeeService.createEmployee(req.body);
+        return resp.status(response.meta.code).send(response);
 
     }
-    catch(error){
+    catch (error) {
 
-        return resp.status(400).send({meta:{code:400,message:"Error",module:"EMPLOYEE"}});
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
     }
 };
 
 
 export const employeeController = {
     createEmployee,
-    findAll
+    findAll,
+    findAllByUser
 }

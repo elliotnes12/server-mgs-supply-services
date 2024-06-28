@@ -1,3 +1,6 @@
+import { User } from "../../../../../core/infrastructure/databases/mongo/entities/user.js";
+import { Customer } from "../../../../../models/index.js";
+import { Employee } from "../../../../employee/infrastructure/databases/mongodb/entities/employee.js";
 import { ChatRepository } from "../../../domain/ports/chatRepository.js";
 import { Chat } from "./entities/chat.js";
 import { ChatMessage } from "./entities/chat_message.js";
@@ -25,7 +28,7 @@ export class MongoChatRepository extends ChatRepository {
     }
 
     async sendImageChat(chatId, path, userId) {
-        
+
         const chat_message = new ChatMessage({
             chat: chatId,
             user: userId,
@@ -61,24 +64,49 @@ export class MongoChatRepository extends ChatRepository {
     }
     async findAllChatsByUserId(userId) {
 
+        const allChats = new Array();
+
         const chats = await Chat.find({
-            $or: [{ participant_one: userId }, { participant_two: userId }]
-        }).populate("participant_one", "-password").populate("participant_two", "-password")
-
-
-        const arrayChats = [];
+            $or: [
+                { participant_one: userId },
+                { participant_two: userId }
+            ]
+        });
 
         for (const chat of chats) {
 
-            const date = await ChatMessage.findOne({ chat: chat._id }).sort({ createdAt: -1 });
-            arrayChats.push({
-                ...chat._doc,
-                last_message_date: date?.createdAt || null
-            })
+            const id = chat.participant_one != userId ? chat.participant_one : chat.participant_two;
+
+            
+            const user = await User.findOne({ _id: id }).populate("role");
+
+            if (user.role.name == "customer") {
+
+                const customer = await Customer.findOne({ user: user._id });
+
+                allChats.push({
+                    role: user.role.name,
+                    idUser: user._id,
+                    name: customer.name,
+                    idChat: chat._id
+                })
+
+            } else {
+
+                const employee = await Employee.findOne({ user: user._id });
+
+                allChats.push({
+                    role: user.role.name,
+                    idUser: user._id,
+                    name: employee.name,
+                    idChat: chat._id
+                })
+
+            }
         }
 
 
-        return arrayChats;
+        return allChats;
     }
 
     async deleteChat(chatId) {

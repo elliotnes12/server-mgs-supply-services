@@ -1,7 +1,6 @@
 import { EmployeeRepository } from "../../../domain/ports/employeeRepository.js";
 import { Employee } from "./entities/employee.js";
 
-
 export class MongoEmployeeRepository extends EmployeeRepository {
 
     async save(dataEmployee){
@@ -11,7 +10,13 @@ export class MongoEmployeeRepository extends EmployeeRepository {
     }
 
     async findAll(){
-        return await Employee.find();    
+        return await Employee.find();
+    } 
+
+    async findAllByUser(userId){
+        return Employee.find({ 
+            user: { $ne: null } 
+        }).populate('user'); 
     }
     
     async find(filter){

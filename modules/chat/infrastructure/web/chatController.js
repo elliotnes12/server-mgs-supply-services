@@ -137,6 +137,9 @@ const getAllChatsByUserId = async (req,resp) =>{
 
         const { user_id } = req.user;
 
+        console.log("cual es");
+        console.log(user_id)
+
         const response = await chatService.getAll(user_id);
   
         return resp.status(response.meta.code).send(response);

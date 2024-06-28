@@ -9,15 +9,15 @@ export class ChatService {
     }
 
 
-    async getLastMessageByChatId(chatId){
-    
+    async getLastMessageByChatId(chatId) {
+
         try {
 
             console.log(chatId)
             const chat = await this.repositories.chatRepository.getLastMessageByChatId(chatId);
 
             return {
-                meta: { code: 200, module: "CHAT", message: "success" }, data:chat
+                meta: { code: 200, module: "CHAT", message: "success" }, data: chat
             };
 
 
@@ -29,8 +29,8 @@ export class ChatService {
     }
 
 
-    async getTotalMessages(chatId){
-    
+    async getTotalMessages(chatId) {
+
         try {
 
             console.log(chatId)
@@ -50,7 +50,7 @@ export class ChatService {
 
     }
 
-    async getAllMessagesByChatId(chatId){
+    async getAllMessagesByChatId(chatId) {
 
 
         try {
@@ -144,7 +144,11 @@ export class ChatService {
             const chats = await this.repositories.chatRepository.findAllChatsByUserId(userId);
 
             if (chats.length == 0) {
-                throw new Error();
+
+                return {
+                    meta: { code: 404, module: "CHAT", message: "success" }, data: []
+                };
+
             }
 
             return {
@@ -155,6 +159,7 @@ export class ChatService {
 
         }
         catch (error) {
+            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error" } };
         }
     }
@@ -201,7 +206,7 @@ export class ChatService {
 
         } catch (error) {
             return {
-                meta: { code: 400, module: "CHAT", message: "CHAT already registered" }, data: {
+                meta: { code: 200, module: "CHAT", message: "CHAT already registered" }, data: {
                     chatId: idChat
                 }
             };

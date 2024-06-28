@@ -7,6 +7,24 @@ export class EmployeeService {
         this.repositories = repositories;
     }
 
+
+    async findAllByUser(userId){
+
+        try{
+
+            const employees = await this.repositories.employeeRepository.findAllByUser(userId);
+
+            return {
+                meta: { code: 200, module: "EMPLOYEE", message: "success" },
+                data: employees 
+            };
+        }
+        catch(error){
+
+            return { meta: { code: 400, module: "EMPLOYEE", message: "Error" } };
+        }
+
+    }
     async findAll(){
 
         try{

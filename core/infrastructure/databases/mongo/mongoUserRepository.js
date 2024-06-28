@@ -1,4 +1,5 @@
 import { Customer, Employee } from "../../../../models/index.js";
+import { ROLES } from "../../../../utils/constants.js";
 import { userRepository } from "../../../domain/ports/userRepository.js";
 import { User } from "./entities/user.js";
 import mongoose from "mongoose";
@@ -45,41 +46,82 @@ export class MongoUserRepository extends userRepository {
     }
 
     async findUserByIdWithRole(userId) {
-       
 
-        try{
+
+        try {
 
             const user = await User.findById(userId).select("-password")
-            .populate('role');
+                .populate('role');
 
             const roleName = user.role.name;
-        
+
             console.log("encontraste rol");
             console.log(roleName)
 
-            if(roleName === "customer"){
+            if (roleName === "customer") {
                 const customer = await Customer.findOne({
-                    user:user._id
+                    user: user._id
                 })
-                return {user,customer};
+                return { user, customer };
             }
 
 
             const employee = await Employee.findOne({
-                 user:user._id
+                user: user._id
             });
 
-            return {user,employee};
+            return { user, employee };
 
-            
-        }   
-        catch(error){
+
+        }
+        catch (error) {
             throw new Error(error.message);
-        } 
+        }
     }
 
     async findAll(userId) {
-        return await User.find({ _id: { $ne: userId } }).select("-password");
+        const users = await User.find({ _id: { $ne: userId } })
+            .select("-password").populate("role", "-permissions");
+
+        const response = new Array();
+
+        for (const user of users) {
+            const role = user.role.name;
+
+            if (role == ROLES.CUSTOMER) {
+
+                const customer = await Customer.findOne({
+                    user: user._id
+                })
+
+                response.push(
+                    {
+                        id: user._id,
+                        idCustomer: customer._id,
+                        name: customer.name,
+                        type: "customer"
+                    }
+                );
+            } else {
+
+                const employee = await Employee.findOne({
+                    user: user._id
+                })
+
+                response.push(
+                    {
+                        id: user._id,
+                        idEmployee: employee.idEmployee,
+                        name: employee.name,
+                        type: employee.type
+                    }
+                );
+
+            }
+
+        }
+
+        return response;
     }
 
     async findUpdateEmployeeById(id, userId, session) {
@@ -94,12 +136,12 @@ export class MongoUserRepository extends userRepository {
         return await User.findOneAndUpdate(
             { _id: id },
             data,
-            { new: true}
+            { new: true }
         );
     }
 
     async createCustomer(userId, pName, pLastName, pTelephone, session) {
-       
+
         const newCustomer = new Customer({
             user: userId,
             name: pName,

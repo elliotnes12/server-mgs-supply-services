@@ -72,3 +72,9 @@ export const SWAGGER_SPEC = {
 }
 
 
+export const ROLES = {
+     CUSTOMER:"customer",
+     EMPLOYEE:"employee",
+     MANAGER:"manager",
+     SUPERVISOR:"supervisor"
+}
