@@ -152,7 +152,7 @@ export class AuthService {
 
     async save(userData) {
 
-        const { email, password, idEmployee , name, telephone, lastName } = userData;
+        const { email, password, idEmployee , name } = userData;
         let idRole = undefined;
         let roleName = "customer";
         let active = false;
@@ -192,7 +192,7 @@ export class AuthService {
             if(idEmployee){
                 infoUser = {idEmployee:idEmployee};
             }else{
-                infoUser =  {name:name,telephone:telephone,lastName:lastName};
+                infoUser =  {name:name};
             }
 
 

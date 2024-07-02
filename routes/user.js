@@ -9,6 +9,7 @@ const api = express.Router();
 
 api.get("/user/me",[mdAuth.asureAuth],userController.getMe);
 api.get("/users",[mdAuth.asureAuth],userController.getAll);
+api.get("/users-support",[mdAuth.asureAuth],userController.getAllSupport);
 api.get("/user/:id",[mdAuth.asureAuth],userController.findUserById);
 
 

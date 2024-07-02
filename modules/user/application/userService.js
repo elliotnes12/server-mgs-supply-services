@@ -38,6 +38,19 @@ export class UserService {
         }
     }
 
+    async getAllSupport(userId){
+        try{
+           const users = await this.repositories.userRepository.findAllSupport(userId);
+           return { meta: { code: 200, module: "USER", message: "success" },
+             data:users
+           };
+
+        }catch(error){
+            console.log(error);
+            return { meta: { code: 400, module: "USER", message: "Users not found" } };
+        }
+    }
+
 
     async getMe(userId){
 

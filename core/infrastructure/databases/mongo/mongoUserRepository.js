@@ -8,7 +8,7 @@ export class MongoUserRepository extends userRepository {
 
     async save(user, userInfo) {
 
-        const { idEmployee, name, lastName, telephone } = userInfo;
+        const { idEmployee, name } = userInfo;
 
         const session = await mongoose.startSession();
         session.startTransaction();
@@ -21,7 +21,7 @@ export class MongoUserRepository extends userRepository {
             if (idEmployee) {
                 await this.findUpdateEmployeeById(idEmployee, newUser._id, session);
             } else {
-                await this.createCustomer(newUser._id, name, lastName, telephone, session);
+                await this.createCustomer(newUser._id, name, session);
             }
 
             await session.commitTransaction();
@@ -124,6 +124,38 @@ export class MongoUserRepository extends userRepository {
         return response;
     }
 
+
+    async findAllSupport(userId) {
+        const users = await User.find({ _id: { $ne: userId } })
+        .select("-password").populate("role");
+
+    const response = new Array();
+
+    for (const user of users) {
+        const role = user.role.name;
+
+        if (role == "supervisor") {
+
+            const employee = await Employee.findOne({
+                user: user._id
+            })
+
+            response.push(
+                {
+                    id: user._id,
+                    idEmployee: employee.idEmployee,
+                    name: employee.name,
+                    type: employee.type
+                }
+            );
+
+        }
+
+    }
+
+    return response;
+    }
+
     async findUpdateEmployeeById(id, userId, session) {
         return await Employee.findOneAndUpdate(
             { idEmployee: id },
@@ -140,13 +172,11 @@ export class MongoUserRepository extends userRepository {
         );
     }
 
-    async createCustomer(userId, pName, pLastName, pTelephone, session) {
+    async createCustomer(userId, pName, session) {
 
         const newCustomer = new Customer({
             user: userId,
-            name: pName,
-            lastName: pLastName,
-            telephone: pTelephone
+            name: pName
         });
 
         await newCustomer.save({ session });

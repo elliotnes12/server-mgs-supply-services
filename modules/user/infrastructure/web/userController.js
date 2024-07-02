@@ -58,9 +58,27 @@ const getAll = async(req,resp) =>{
 }
 
 
+const getAllSupport = async(req,resp) =>{
+
+
+    const { user_id } = req.user;
+
+    try {
+        const response = await userService.getAllSupport(user_id);
+        return resp.status(response.meta.code).send(response);
+    }
+    catch (error) {
+        return resp.status(400).send("error");
+    }
+
+
+}
+
+
 
 export const userController = {
     getMe,
     getAll,
-    findUserById
+    findUserById,
+    getAllSupport
 }
