@@ -93,26 +93,23 @@ export class ChatService {
     }
 
     async sendMessageChat(chatId, message, userId) {
-
-
         try {
-
             const data = await this.repositories.chatRepository.sendMessageChat(chatId, message, userId);
-
+    
+            console.log(`Emitiendo mensaje al canal ${chatId}`);
             io.sockets.in(chatId).emit("message", data);
+            console.log(`Emitiendo notificación de mensaje al canal ${chatId}_notify`);
             io.sockets.in(`${chatId}_notify`).emit("message_notify", data);
-
-
+    
             return {
-                meta: { code: 200, module: "CHAT", message: "send message" }, data: data
+                meta: { code: 200, module: "CHAT", message: "Mensaje enviado" }, data: data
             };
-
-
-        }
-        catch (error) {
+        } catch (error) {
+            console.error("Error al enviar el mensaje:", error);
             return { meta: { code: 404, module: "CHAT", message: "Error" } };
         }
     }
+    
 
 
     async getChatById(chatId) {

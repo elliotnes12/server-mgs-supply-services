@@ -6,4 +6,5 @@ import { connectDB, io } from './utils/index.js';
 server.listen(PORT,() =>{
     
     connectDB(createSocket(io));
+    console.log("se creo socket");
 });
