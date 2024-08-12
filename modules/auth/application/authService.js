@@ -13,25 +13,25 @@ export class AuthService {
 
     }
 
-    async generateCode(userId,email){
+    async generateCode(userId, email) {
 
-        try{
+        try {
 
             const numbers = generateRandomNumbers(4);
             const expire = getExpirationTime();
 
-            await this.repositories.userRepository.findUpdateUserById(userId,{
-                validationCode:numbers.join('-').trim(),
+            await this.repositories.userRepository.findUpdateUserById(userId, {
+                validationCode: numbers.join('-').trim(),
                 validationCodeExpires: expire
             });
 
-            
-            emailController.sendEmail(email,numbers.join('-').trim());
+
+            emailController.sendEmail(email, numbers.join('-').trim());
 
             return { meta: { code: 200, module: "AUTH", message: "success" } };
-            
 
-        }catch(error){
+
+        } catch (error) {
 
             console.log(error);
             return { meta: { code: 400, module: "AUTH", message: "error generate code" } };
@@ -39,20 +39,20 @@ export class AuthService {
     }
 
 
-    async activateUser(dataCode,userId){
+    async activateUser(dataCode, userId) {
 
-        try{
+        try {
 
-            const {code} = dataCode;
+            const { code } = dataCode;
 
             const user = await this.repositories.userRepository.findUserById(userId);
             const isDateLess = isDateLessThanOrEqualToCurrent(user.validationCodeExpires, DATE_ZONE);
 
 
-            if(user.validationCode == code && isDateLess){
-            
-                await this.repositories.userRepository.findUpdateUserById(userId,{
-                    active:true
+            if (user.validationCode == code && isDateLess) {
+
+                await this.repositories.userRepository.findUpdateUserById(userId, {
+                    active: true
                 });
                 return { meta: { code: 200, module: "AUTH", message: "success" } };
             }
@@ -61,7 +61,7 @@ export class AuthService {
 
             throw new Error();
 
-        }catch(error){
+        } catch (error) {
 
             console.log(error);
             return { meta: { code: 400, module: "AUTH", message: "invalid code" } };
@@ -85,9 +85,11 @@ export class AuthService {
             const { user_id } = token.decode(refreshToken);
             const user = await this.repositories.userRepository.findUserById(user_id);
 
-            return { meta: { code: 200, module: "AUTH", message: "success" }, data: {
-                access: token.createAccessToken(user)
-            } };
+            return {
+                meta: { code: 200, module: "AUTH", message: "success" }, data: {
+                    access: token.createAccessToken(user)
+                }
+            };
 
         }
         catch (error) {
@@ -112,10 +114,10 @@ export class AuthService {
             const result = await bcrypt.compare(password, user.password);
 
             if (!result) {
-                return { meta: { code: 401, module: "AUTH", message: "No Authorized" } };
+                return { meta: { code: 401, module: "AUTH", message: "Invalid user or password" } };
             }
 
-            
+
             const isDateLess = isDateLessThanOrEqualToCurrent(user.validationCodeExpires, DATE_ZONE);
 
             if (!user.active && !isDateLess) {
@@ -123,14 +125,14 @@ export class AuthService {
                 const numbers = generateRandomNumbers(4);
                 const expire = getExpirationTime();
 
-                await this.repositories.userRepository.findUpdateUserById(user._id,{
-                    validationCode:numbers.join('-').trim(),
+                await this.repositories.userRepository.findUpdateUserById(user._id, {
+                    validationCode: numbers.join('-').trim(),
                     validationCodeExpires: expire
                 });
 
-                emailController.sendEmail(email,numbers.join('-').trim());
+                emailController.sendEmail(email, numbers.join('-').trim());
 
-            }     
+            }
 
             return {
                 meta: { code: 200, module: "AUTH", message: "success" },
@@ -152,7 +154,7 @@ export class AuthService {
 
     async save(userData) {
 
-        const { email, password, idEmployee , name } = userData;
+        const { email, password, idEmployee, name } = userData;
         let idRole = undefined;
         let roleName = "customer";
         let active = false;
@@ -186,28 +188,28 @@ export class AuthService {
 
             const userModel = new UserModel(email, hashPassword, active, idRole);
 
-            
+
             let infoUser = undefined;
 
-            if(idEmployee){
-                infoUser = {idEmployee:idEmployee};
-            }else{
-                infoUser =  {name:name};
+            if (idEmployee) {
+                infoUser = { idEmployee: idEmployee };
+            } else {
+                infoUser = { name: name };
             }
 
 
-            const user = await this.repositories.userRepository.save(userModel,infoUser);
+            const user = await this.repositories.userRepository.save(userModel, infoUser);
 
             return { meta: { code: 201, module: "AUTH", message: "success" }, data: user };
 
 
         } catch (error) {
 
-             const message = error.message != undefined &&
-             error.message.indexOf("duplicate key")? "Usuario ya existente": "Error";
-             
-             
-             return { meta: { code: 400, module: "AUTH", message: message } };
+            const message = error.message != undefined &&
+                error.message.indexOf("duplicate key") ? "User already created" : "Error";
+
+
+            return { meta: { code: 400, module: "AUTH", message: message } };
         }
 
     }
