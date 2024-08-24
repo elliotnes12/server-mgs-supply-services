@@ -6,9 +6,10 @@ import { orderController } from "../modules/orderService/infrastructure/web/orde
 
 const api = express.Router();
 
-api.post("/service-order",[mdAuth.asureAuth,mdValidate.parseDateMiddleware],orderController.save);
-api.get("/service-order/supervisor/:id",[mdAuth.asureAuth],orderController.findAllBySupervisor);
-api.put("/service-order",[mdAuth.asureAuth],orderController.assignServiceOrder);
+api.post("/services", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.save);
+api.get("/services/orders/supervisor/:limit?", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
+api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
+api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 
 
 

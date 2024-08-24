@@ -1,8 +1,13 @@
 import mongoose from "mongoose";
+import moment from "moment"; 
 
 const appointmentSchema = new mongoose.Schema({
   date: {
-    type: Date,
+    type: String,
+    required: true
+  },
+  hour: {
+    type: String,
     required: true
   },
   user: {
@@ -55,5 +60,28 @@ const appointmentSchema = new mongoose.Schema({
   }
 });
 
+appointmentSchema.virtual("formattedDate").get(function () {
+  if (!this.date || !moment(this.date, "YYYY-MM-DD").isValid()) {
+    return "";
+  }
+  return moment(this.date, "YYYY-MM-DD").format("DD/MM/YYYY");
+});
+
+appointmentSchema.virtual("formattedTime").get(function () {
+  if (!this.hour || !moment(this.hour, "HH:mm").isValid()) {
+    return "";
+  }
+  return moment(this.hour, "HH:mm").format("HH:mm A");
+});
+
+appointmentSchema.set("toJSON", {
+  virtuals: true,
+  transform: function (doc, ret) {
+    ret.formattedDate = ret.formattedDate;
+    ret.formattedTime = ret.formattedTime;
+    delete ret._id;
+    return ret;
+  }
+});
 
 export const Appointment = mongoose.model('Appointment', appointmentSchema);

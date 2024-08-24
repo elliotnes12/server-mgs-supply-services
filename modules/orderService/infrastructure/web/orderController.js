@@ -1,22 +1,40 @@
 import { ServiceOrder } from "../../application/serviceOrder.js";
-import { MongoOrderRepository } from "../databases/mongodb/mongoOrderRepository.js";
+import { MongoServiceRepository } from "../databases/mongodb/mongoServiceRepository.js";
 
 
 
 const repositories = {
-    orderRepository: new MongoOrderRepository(),
+    orderRepository: new MongoServiceRepository(),
 }
 
 
 const serviceOrder = new ServiceOrder(repositories);
 
 
-const findAllBySupervisor = async (req,resp) =>{
+
+const findAll = async (req, resp) => {
+    try {
+
+        const { limit } = req.params;
+
+        const response = await serviceOrder.findAll(limit);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+    }
+}
+
+const findAllByIdSupervisor = async (req, resp) => {
 
     try{
 
-        const { id } = req.params;
-        const response = await serviceOrder.findAllBySupervisor(id);
+        const { user_id } = req.user;
+        const { limit } = req.params;
+
+        const response = await serviceOrder.findAllByIdSupervisor(user_id, limit);
   
         return resp.status(response.meta.code).send(response);
   
@@ -59,6 +77,7 @@ const save = async (req,resp) =>{
 
 export const orderController = {
    save,
-   findAllBySupervisor,
+    findAll,
+    findAllByIdSupervisor,
    assignServiceOrder
 }

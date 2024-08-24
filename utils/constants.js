@@ -1,9 +1,5 @@
 import path  from "path";
 
-
-
-
-
 export const CONFIG_EMAIL = {
     type:{
        activeAccount:1
