@@ -138,6 +138,7 @@ export class ChatService {
 
         try {
 
+            console.log("PASO ACA USER" + userId)
             const chats = await this.repositories.chatRepository.findAllChatsByUserId(userId);
 
             if (chats.length == 0) {
@@ -196,6 +197,7 @@ export class ChatService {
 
             const chat = await this.repositories.chatRepository.save(participant_id_one, participant_id_two);
 
+            io.sockets.in(chat._id).emit("message", data);
             return {
                 meta: { code: 201, module: "CHAT", message: "success" }, data: chat
             };

@@ -13,7 +13,8 @@ export class MongoChatRepository extends ChatRepository {
         return await ChatMessage.findOne({ chat: chatId }).sort({ createdAt: -1 });
     }
     async getTotalMessagesByChatId(chatId) {
-        return await ChatMessage.countDocuments({ chat: chatId });
+        const count = await ChatMessage.countDocuments({ chat: chatId });
+        return count;
     }
 
     async getAllMessagesByChatId(chatId) {
@@ -43,6 +44,10 @@ export class MongoChatRepository extends ChatRepository {
     }
     async sendMessageChat(chatId, message, userId) {
 
+        console.log("cual es el mensaje")
+        console.log(chatId)
+        console.log(message)
+        console.log(userId)
         const chat_message = new ChatMessage({
             chat: chatId,
             user: userId,
@@ -63,6 +68,7 @@ export class MongoChatRepository extends ChatRepository {
             .populate("participant_two", "-password");
     }
     async findAllChatsByUserId(userId) {
+
         const allChats = [];
     
         const chats = await Chat.find({
@@ -73,34 +79,44 @@ export class MongoChatRepository extends ChatRepository {
         });
     
         for (const chat of chats) {
+
             const id = chat.participant_one != userId ? chat.participant_one : chat.participant_two;
             const user = await User.findOne({ _id: id }).populate("role");
-    
             let lastMessage = await ChatMessage.findOne({ chat: chat._id }).sort({ createdAt: -1 });
-    
+
             if (user.role.name === "customer") {
                 const customer = await Customer.findOne({ user: user._id });
     
-                allChats.push({
-                    role: user.role.name,
-                    idUser: user._id,
-                    name: customer.name,
-                    idChat: chat._id,
-                    last_message_chat: lastMessage ? lastMessage.createdAt : null
-                });
+                if (lastMessage != undefined) {
+
+                    allChats.push({
+                        role: user.role.name,
+                        idUser: user._id,
+                        name: customer.name,
+                        idChat: chat._id,
+                        last_message_chat: lastMessage ? lastMessage.createdAt : null
+                    });
+                }
+
             } else {
                 const employee = await Employee.findOne({ user: user._id });
     
-                allChats.push({
-                    role: user.role.name,
-                    idUser: user._id,
-                    name: employee.name,
-                    idChat: chat._id,
-                    last_message_chat: lastMessage ? lastMessage.createdAt : null
-                });
+                if (lastMessage != undefined) {
+
+                    allChats.push({
+                        role: user.role.name,
+                        idUser: user._id,
+                        name: employee.name,
+                        idChat: chat._id,
+                        last_message_chat: lastMessage ? lastMessage.createdAt : null
+                    });
+
+                }
+
             }
         }
     
+        console.log(allChats)
         return allChats;
     }
     
