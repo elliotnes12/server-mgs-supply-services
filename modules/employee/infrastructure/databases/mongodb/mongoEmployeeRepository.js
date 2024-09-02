@@ -9,9 +9,10 @@ export class MongoEmployeeRepository extends EmployeeRepository {
         return employee.save();
     }
 
-    async findAll(){
-        return await Employee.find();
-    } 
+    async findAll(page = 1, limit = 20) {
+        const skip = (page - 1) * limit;
+        return await Employee.find().skip(skip).limit(limit);
+    }
 
     async findAllByUser(userId){
         return Employee.find({ 

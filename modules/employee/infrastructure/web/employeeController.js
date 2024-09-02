@@ -16,7 +16,10 @@ const findAll = async (req, resp) => {
 
     try {
 
-        const response = await employeeService.findAll();
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const response = await employeeService.findAll(page, limit);
         return resp.status(response.meta.code).send(response);
 
     }

@@ -25,11 +25,11 @@ export class EmployeeService {
         }
 
     }
-    async findAll(){
+    async findAll(page, limit) {
 
         try{
 
-            const employees = await this.repositories.employeeRepository.findAll();
+            const employees = await this.repositories.employeeRepository.findAll(page, limit);
 
             return {
                 meta: { code: 200, module: "EMPLOYEE", message: "success" },
