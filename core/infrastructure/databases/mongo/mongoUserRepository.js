@@ -8,7 +8,7 @@ export class MongoUserRepository extends userRepository {
 
     async save(user, userInfo) {
 
-        const { idEmployee, name } = userInfo;
+        const { idEmployee, name, businessName, businessType } = userInfo;
 
         const session = await mongoose.startSession();
         session.startTransaction();
@@ -21,7 +21,7 @@ export class MongoUserRepository extends userRepository {
             if (idEmployee) {
                 await this.findUpdateEmployeeById(idEmployee, newUser._id, session);
             } else {
-                await this.createCustomer(newUser._id, name, session);
+                await this.createCustomer(newUser._id, name, session, businessName, businessType);
             }
 
             await session.commitTransaction();
@@ -172,11 +172,13 @@ export class MongoUserRepository extends userRepository {
         );
     }
 
-    async createCustomer(userId, pName, session) {
+    async createCustomer(userId, pName, session, pBusinessName, pBusinessType) {
 
         const newCustomer = new Customer({
             user: userId,
-            name: pName
+            name: pName,
+            businessName: pBusinessName,
+            businessType: pBusinessType
         });
 
         await newCustomer.save({ session });

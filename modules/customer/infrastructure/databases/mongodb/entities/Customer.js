@@ -1,19 +1,13 @@
 import mongoose from "mongoose";
 
 const CustomerSchema = mongoose.Schema({
-    name:String,
-    lastName:{type: String , default: null}, 
-    telephone:{type: String , default: null},
-    company: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Company",
-        default: null
-    },
+    name: String,
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
     },
-    otherCompany:{type:String,default:null}
+    businessName: String,
+    businessType: String
 });
 
 export const Customer = mongoose.model("Customer",CustomerSchema);
