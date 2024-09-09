@@ -13,7 +13,8 @@ export class MongoCustomerRepository extends CustomerRepository {
     async findAll(page = 1, limit = 20) {
 
         const skip = (page - 1) * limit;
-        return await Customer.find().skip(skip).limit(limit);
+        return await Customer.find().skip(skip).limit(limit)
+            .populate('user', '-password -active -validationCode -validationCodeExpires');
     }
 
     async findByBusinessName(businessName) {
