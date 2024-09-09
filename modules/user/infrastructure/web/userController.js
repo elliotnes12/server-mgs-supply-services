@@ -41,6 +41,21 @@ const getMe = async (req, resp) => {
 
 }
 
+const getCustomerByEmail = async (req, resp) => {
+
+    const { email } = req.body;
+
+    try {
+        const response = await userService.getCustomerByEmail(email);
+        return resp.status(response.meta.code).send(response);
+    }
+    catch (error) {
+        console.log(error);
+        return resp.status(400).send("error");
+    }
+
+}
+
 const getAll = async(req,resp) =>{
 
 
@@ -80,5 +95,6 @@ export const userController = {
     getMe,
     getAll,
     findUserById,
-    getAllSupport
+    getAllSupport,
+    getCustomerByEmail
 }

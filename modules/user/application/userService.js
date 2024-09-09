@@ -69,4 +69,26 @@ export class UserService {
           
     }
 
+
+
+    async getCustomerByEmail(email) {
+
+        try {
+
+            const user = await this.repositories.userRepository.findUserByEmailWithRole(email)
+            console.log(user)
+            if (user == null || user == undefined) {
+                throw new Exception();
+            }
+            return { meta: { code: 200, module: "USER", message: "success" }, data: user };
+
+        }
+        catch (error) {
+
+            console.log(error);
+            return { meta: { code: 400, module: "USER", message: "User not found" } };
+        }
+
+    }
+
 }

@@ -10,8 +10,25 @@ export class MongoCustomerRepository extends CustomerRepository {
         return customer.save();
     }
 
-    async findAll(){
-        return await Customer.find();    
+    async findAll(page = 1, limit = 20) {
+
+        const skip = (page - 1) * limit;
+        return await Customer.find().skip(skip).limit(limit);
+    }
+
+    async findByBusinessName(businessName) {
+
+        return await Customer.find({
+            businessName: { $regex: new RegExp(businessName, "i") }
+        });
+    }
+
+    async findByName(name, page = 1, limit = 20) {
+
+        const skip = (page - 1) * limit;
+        return await Customer.find({
+            name: { $regex: new RegExp(name, "i") }
+        }).skip(skip).limit(limit);
     }
 
 

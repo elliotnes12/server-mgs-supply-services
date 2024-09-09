@@ -39,10 +39,40 @@ export class MongoUserRepository extends userRepository {
     async findUserByEmail(email) {
         const emailLower = email.toLowerCase();
         return await User.findOne({ email: emailLower });
+
     }
 
     async findUserById(userId) {
         return await User.findById(userId).select("-password");
+    }
+
+
+    async findUserByEmailWithRole(email) {
+
+        try {
+
+            const user = await User.findOne({
+                email: email
+            }).select("-password")
+                .populate('role');
+
+            const roleName = user.role.name;
+
+            if (roleName === "customer") {
+                const customer = await Customer.findOne({
+                    user: user._id,
+                })
+                return { user, customer };
+            }
+
+
+            return null;
+
+
+        }
+        catch (error) {
+            throw new Error(error.message);
+        }
     }
 
     async findUserByIdWithRole(userId) {
@@ -54,9 +84,6 @@ export class MongoUserRepository extends userRepository {
                 .populate('role');
 
             const roleName = user.role.name;
-
-            console.log("encontraste rol");
-            console.log(roleName)
 
             if (roleName === "customer") {
                 const customer = await Customer.findOne({
