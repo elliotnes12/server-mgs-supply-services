@@ -34,6 +34,11 @@ const appointmentSchema = new mongoose.Schema({
     required: true,
     ref: 'User'
   },
+  customer: {
+    type: mongoose.Schema.Types.ObjectId,
+    required: true,
+    ref: 'Customer'
+  },
   supervisor: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,

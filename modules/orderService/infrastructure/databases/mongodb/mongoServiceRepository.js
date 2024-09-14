@@ -25,6 +25,7 @@ export class MongoServiceRepository extends IServiceRepository {
         const skip = (page - 1) * limit;
 
         return Appointment.find({ supervisor: id_supervisor })
+            .populate("customer")
             .sort({ status: 1 }).skip(skip).limit(limit)
     }
 
