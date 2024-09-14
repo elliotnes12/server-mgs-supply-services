@@ -50,11 +50,11 @@ export class ServiceOrder {
     }
 
 
-    async findAllByIdSupervisor(id, limit) {
+    async findAllByIdSupervisor(page, limit, id_supervisor) {
 
         try {
 
-            const response = await this.repositories.orderRepository.findAllByIdSupervisor(id, limit);
+            const response = await this.repositories.orderRepository.findAllByIdSupervisor(page, limit, id_supervisor);
 
             return {
                 meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response

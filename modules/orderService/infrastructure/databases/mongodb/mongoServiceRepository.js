@@ -20,10 +20,12 @@ export class MongoServiceRepository extends IServiceRepository {
         );
     }
 
-    async findAllByIdSupervisor(id, limit) {
-        return Appointment.find({ supervisor: id })
-            .sort({ status: 1 })
-            .limit(limit > 0 ? limit : undefined);
+    async findAllByIdSupervisor(page = 1, limit = 20, id_supervisor) {
+
+        const skip = (page - 1) * limit;
+
+        return Appointment.find({ supervisor: id_supervisor })
+            .sort({ status: 1 }).skip(skip).limit(limit)
     }
 
     async findAll(limit) {

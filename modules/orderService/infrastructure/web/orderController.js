@@ -31,10 +31,11 @@ const findAllByIdSupervisor = async (req, resp) => {
 
     try{
 
-        const { user_id } = req.user;
-        const { limit } = req.params;
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const { id_supervisor } = req.params;
 
-        const response = await serviceOrder.findAllByIdSupervisor(user_id, limit);
+        const response = await serviceOrder.findAllByIdSupervisor(page, limit, id_supervisor);
   
         return resp.status(response.meta.code).send(response);
   
