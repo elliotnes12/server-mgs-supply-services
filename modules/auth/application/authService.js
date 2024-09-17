@@ -22,7 +22,7 @@ export class AuthService {
             const numbers = generateRandomNumbers(4);
             const expire = getExpirationTime();
 
-            await this.repositories.userRepository.findUpdateUserById(userId, {
+            await this.repositories.userRepository.findUpdateUserByEmail(email, {
                 validationCode: numbers.join('-').trim(),
                 validationCodeExpires: expire
             });
@@ -41,19 +41,19 @@ export class AuthService {
     }
 
 
-    async activateUser(dataCode, userId) {
+    async activateUser(dataCode) {
 
         try {
 
-            const { code } = dataCode;
+            const { code, email } = dataCode;
 
-            const user = await this.repositories.userRepository.findUserById(userId);
+            const user = await this.repositories.userRepository.findUserByEmail(email);
             const isDateLess = isDateLessThanOrEqualToCurrent(user.validationCodeExpires, DATE_ZONE);
 
 
             if (user.validationCode == code && isDateLess) {
 
-                await this.repositories.userRepository.findUpdateUserById(userId, {
+                await this.repositories.userRepository.findUpdateUserByEmail(email, {
                     active: true
                 });
                 return { meta: { code: 200, module: "AUTH", message: "success" } };

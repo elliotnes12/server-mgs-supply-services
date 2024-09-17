@@ -199,6 +199,15 @@ export class MongoUserRepository extends userRepository {
         );
     }
 
+    async findUpdateUserByEmail(email, data) {
+        return await User.findOneAndUpdate(
+            { email: email },
+            data,
+            { new: true }
+        );
+    }
+
+
     async createCustomer(userId, pName, session, pBusinessName, pBusinessType) {
 
         const newCustomer = new Customer({

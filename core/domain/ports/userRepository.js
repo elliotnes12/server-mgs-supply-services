@@ -10,6 +10,9 @@ export class userRepository{
     findUserById(id){
         throw new Error("Method 'findUserById' must be implemented.")
     }
+    findUserByEmail(email) {
+        throw new Error("Method 'findUserByEmail' must be implemented.")
+    }
     findUserByIdWithRole(userId){
         throw new Error("Method 'findUserByIdWithRole' must be implemented.") 
     }

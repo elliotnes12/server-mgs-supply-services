@@ -65,9 +65,7 @@ const activateUser = async (req, resp) => {
 
     try {
 
-        const { user_id } = req.user;
-
-        const response = await authService.activateUser(req.body,user_id);
+        const response = await authService.activateUser(req.body);
         resp.status(response.meta.code).send(response);
     } catch (error) {
 
