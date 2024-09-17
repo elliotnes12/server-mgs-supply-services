@@ -12,11 +12,12 @@ export class MongoUserRepository extends userRepository {
 
         const session = await mongoose.startSession();
         session.startTransaction();
+        let newUser = undefined;
 
         try {
 
             const userModel = new User(user);
-            const newUser = await userModel.save({ session });
+            newUser = await userModel.save({ session });
 
             if (idEmployee) {
                 await this.findUpdateEmployeeById(idEmployee, newUser._id, session);
@@ -27,13 +28,12 @@ export class MongoUserRepository extends userRepository {
             await session.commitTransaction();
             session.endSession();
         } catch (error) {
-            console.log(error);
             await session.abortTransaction();
             session.endSession();
             throw new Error(error.message);
         }
 
-        return user;
+        return newUser;
     }
 
     async findUserByEmail(email) {
