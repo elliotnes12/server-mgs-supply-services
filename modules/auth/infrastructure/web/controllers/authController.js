@@ -28,7 +28,7 @@ const refreshToken = async (req, resp) => {
 
 
     } catch (error) {
-        resp.status(400).send("error");
+        resp.status(400).send({ error: error.message });
     }
 
 }
@@ -41,8 +41,7 @@ const registerUser = async (req, resp) => {
         resp.status(response.meta.code).send(response);
     }
     catch (error) {
-        console.log(error)
-        resp.status(400).send("error");
+        resp.status(400).send({ error: error.message });
     }
 }
 
@@ -56,7 +55,7 @@ const login = async (req, resp) => {
         resp.status(response.meta.code).send(response);
     } catch (error) {
 
-        resp.status(400).send("error");
+        resp.status(400).send({ error: error.message });
     }
 
 }
@@ -69,7 +68,7 @@ const activateUser = async (req, resp) => {
         resp.status(response.meta.code).send(response);
     } catch (error) {
 
-        resp.status(400).send("error");
+        resp.status(400).send({ error: error.message });
     }
 }
 
@@ -77,15 +76,12 @@ const activateUser = async (req, resp) => {
 const generateCode = async (req, resp) => {
 
     try {
-
-        const { user_id } = req.user;
         const {email} = req.body;
 
-        const response = await authService.generateCode(user_id,email);
+        const response = await authService.generateCode(email);
         resp.status(response.meta.code).send(response);
     } catch (error) {
-
-        resp.status(400).send("error");
+        resp.status(400).send({ error: error.message });
     }
 }
 

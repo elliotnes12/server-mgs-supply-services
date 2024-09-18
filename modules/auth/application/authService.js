@@ -13,20 +13,21 @@ export class AuthService {
 
     }
 
-    async generateCode(userId, email) {
+    async generateCode(email) {
 
-        console.log("entro a generar codigo")
-        console.log(userId)
         try {
 
             const numbers = generateRandomNumbers(4);
             const expire = getExpirationTime();
 
-            await this.repositories.userRepository.findUpdateUserByEmail(email, {
+            const user = await this.repositories.userRepository.findUpdateUserByEmail(email, {
                 validationCode: numbers.join('-').trim(),
                 validationCodeExpires: expire
             });
 
+            if (user == null) {
+                throw new Error("User not found");
+            }
 
             // emailController.sendEmail(email, numbers.join('-').trim());
 
@@ -35,8 +36,7 @@ export class AuthService {
 
         } catch (error) {
 
-            console.log(error);
-            return { meta: { code: 400, module: "AUTH", message: "error generate code" } };
+            return { meta: { code: 400, module: "AUTH", message: error.message } };
         }
     }
 
@@ -56,7 +56,12 @@ export class AuthService {
                 await this.repositories.userRepository.findUpdateUserByEmail(email, {
                     active: true
                 });
-                return { meta: { code: 200, module: "AUTH", message: "success" } };
+                return {
+                    meta: { code: 200, module: "AUTH", message: "success" }, data: {
+                        access: token.createAccessToken(user),
+                        refresh: token.createRefreshToken(user),
+                    }
+                };
             }
 
 
@@ -65,7 +70,6 @@ export class AuthService {
 
         } catch (error) {
 
-            console.log(error);
             return { meta: { code: 400, module: "AUTH", message: "invalid code" } };
         }
     }
@@ -146,8 +150,7 @@ export class AuthService {
             };
 
         } catch (error) {
-            console.log(error);
-            return { meta: { code: 400, module: "AUTH", message: "User not found" } }
+            return { meta: { code: 400, module: "AUTH", message: error.message } }
         }
 
     }
