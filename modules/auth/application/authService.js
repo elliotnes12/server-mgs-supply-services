@@ -207,8 +207,7 @@ export class AuthService {
 
 
             const user = await this.repositories.userRepository.save(userModel, infoUser);
-            console.log("Usuario")
-            console.log(user)
+
             this.generateCode(user._id, email);
 
             return { meta: { code: 201, module: "AUTH", message: "success" }, data: user };
