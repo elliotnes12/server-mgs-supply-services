@@ -196,7 +196,9 @@ export class ChatService {
             const chat = await this.repositories.chatRepository.save(participant_id_one, participant_id_two);
 
             return {
-                meta: { code: 201, module: "CHAT", message: "success" }, data: chat
+                meta: { code: 201, module: "CHAT", message: "success" }, data: {
+                    chatId: chat._id
+                }
             };
 
 
