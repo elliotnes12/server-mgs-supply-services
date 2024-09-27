@@ -153,8 +153,6 @@ export class ChatService {
                 meta: { code: 200, module: "CHAT", message: "success" }, data: chats
             };
 
-
-
         }
         catch (error) {
             console.log(error)
