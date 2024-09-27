@@ -23,7 +23,7 @@ export class ChatService {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "CHAT", message: "Error" } };
+            return { meta: { code: 404, module: "CHAT", message: "Error getLastMessageByChatId" } };
         }
 
     }
@@ -45,7 +45,7 @@ export class ChatService {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "CHAT", message: "Error" } };
+            return { meta: { code: 404, module: "CHAT", message: "Error getTotalMessages" } };
         }
 
     }
@@ -64,7 +64,7 @@ export class ChatService {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "CHAT", message: "Error" } };
+            return { meta: { code: 404, module: "CHAT", message: "Error getAllMessagesByChatId" } };
         }
 
     }
@@ -88,7 +88,7 @@ export class ChatService {
         }
         catch (error) {
             console.log(error);
-            return { meta: { code: 404, module: "CHAT", message: "Error" } };
+            return { meta: { code: 404, module: "CHAT", message: "Error sendImageChat" } };
         }
     }
 
@@ -106,7 +106,7 @@ export class ChatService {
             };
         } catch (error) {
             console.error("Error al enviar el mensaje:", error);
-            return { meta: { code: 404, module: "CHAT", message: "Error" } };
+            return { meta: { code: 404, module: "CHAT", message: "Error sendMessageChat" + "- chatId- " + chatId + "-userId-" + userId } };
         }
     }
     
@@ -205,7 +205,7 @@ export class ChatService {
 
         } catch (error) {
             return {
-                meta: { code: 200, module: "CHAT", message: "CHAT already registered" }, data: {
+                meta: { code: 200, module: "CHAT", message: "CHAT Error" }, data: {
                     chatId: idChat
                 }
             };
