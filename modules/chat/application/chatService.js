@@ -176,8 +176,6 @@ export class ChatService {
                 meta: { code: 200, module: "CHAT", message: "success" }, data: chat
             };
 
-
-
         }
         catch (error) {
             return { meta: { code: 404, module: "CHAT", message: "Error" } };
@@ -204,7 +202,7 @@ export class ChatService {
 
         } catch (error) {
             return {
-                meta: { code: 200, module: "CHAT", message: "CHAT Error " + error }, data: {
+                meta: { code: 200, module: "CHAT", message: "CHAT Error Save " + error }, data: {
                     chatId: idChat
                 }
             };
