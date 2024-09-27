@@ -197,7 +197,6 @@ export class ChatService {
 
             const chat = await this.repositories.chatRepository.save(participant_id_one, participant_id_two);
 
-            io.sockets.in(chat._id).emit("message", data);
             return {
                 meta: { code: 201, module: "CHAT", message: "success" }, data: chat
             };
