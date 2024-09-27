@@ -191,7 +191,7 @@ export class ChatService {
 
             idChat = await this.repositories.chatRepository.findOneChatByUsers(participant_id_one, participant_id_two);
 
-            if (idChat) {
+            if (idChat != undefined) {
                 throw new Error();
             }
 

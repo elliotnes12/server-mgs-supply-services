@@ -141,7 +141,7 @@ export class MongoChatRepository extends ChatRepository {
             return findOne ? findOne._id : findTwo._id;
         }
 
-        return false;
+        return undefined;
     }
 
     async save(participant_id_one, participant_id_two) {
