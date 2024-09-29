@@ -102,7 +102,7 @@ export class ChatService {
                 const notifyChat = await this.repositories.chatRepository.getChatNotifyById(chatId, userId);
                 io.sockets.in(`user_channel_${idParcipant}`).emit("message_notify", notifyChat);
 
-
+                console.log("total de mensajes ::1")
             }
             console.log(`Emitiendo mensaje al canal ${chatId}`);
             io.sockets.in(chatId).emit("message", data);
