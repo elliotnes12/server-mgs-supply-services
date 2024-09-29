@@ -95,6 +95,8 @@ export class ChatService {
         try {
             const data = await this.repositories.chatRepository.sendMessageChat(chatId, message, userId);
     
+            console.log("Total mensajes");
+            console.log(this.getTotalMessages(chatId));
             if (this.getTotalMessages(chatId) == 1) {
 
                 const chat = await this.getChatById(chatId);
