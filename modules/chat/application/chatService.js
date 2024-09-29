@@ -87,7 +87,6 @@ export class ChatService {
 
         }
         catch (error) {
-            console.log(error);
             return { meta: { code: 404, module: "CHAT", message: "Error sendImageChat" } };
         }
     }
@@ -96,6 +95,15 @@ export class ChatService {
         try {
             const data = await this.repositories.chatRepository.sendMessageChat(chatId, message, userId);
     
+            if (this.getTotalMessages(chatId) == 1) {
+
+                const chat = await this.getChatById(chatId);
+                const idParcipant = chat.participant_one._id != userId ? chat.participant_one._id : chat.participant_two._id;
+                const notifyChat = await this.repositories.chatRepository.getChatNotifyById(chatId, userId);
+                io.sockets.in(`user_channel_${idParcipant}`).emit("message_notify", notifyChat);
+
+
+            }
             console.log(`Emitiendo mensaje al canal ${chatId}`);
             io.sockets.in(chatId).emit("message", data);
             console.log(`Emitiendo notificación de mensaje al canal ${chatId}_notify`);
@@ -105,7 +113,6 @@ export class ChatService {
                 meta: { code: 200, module: "CHAT", message: "Mensaje enviado" }, data: data
             };
         } catch (error) {
-            console.error("Error al enviar el mensaje:", error);
             return { meta: { code: 404, module: "CHAT", message: "Error sendMessageChat" + "- chatId- " + chatId + "-userId-" + userId } };
         }
     }
@@ -138,7 +145,6 @@ export class ChatService {
 
         try {
 
-            console.log("PASO ACA USER" + userId)
             const chats = await this.repositories.chatRepository.findAllChatsByUserId(userId);
 
             if (chats.length == 0) {
@@ -188,7 +194,11 @@ export class ChatService {
             idChat = await this.repositories.chatRepository.findOneChatByUsers(participant_id_one, participant_id_two);
 
             if (idChat != undefined) {
-                throw new Error();
+                return {
+                    meta: { code: 200, module: "CHAT", message: "success" }, data: {
+                        chatId: idChat
+                    }
+                }
             }
 
             const chat = await this.repositories.chatRepository.save(participant_id_one, participant_id_two);
@@ -202,9 +212,7 @@ export class ChatService {
 
         } catch (error) {
             return {
-                meta: { code: 200, module: "CHAT", message: "CHAT Error Save " + error }, data: {
-                    chatId: idChat
-                }
+                meta: { code: 500, module: "CHAT", message: error }
             };
         }
     }

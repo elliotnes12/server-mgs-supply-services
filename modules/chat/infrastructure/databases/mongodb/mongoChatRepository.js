@@ -44,10 +44,6 @@ export class MongoChatRepository extends ChatRepository {
     }
     async sendMessageChat(chatId, message, userId) {
 
-        console.log("cual es el mensaje")
-        console.log(chatId)
-        console.log(message)
-        console.log(userId)
         const chat_message = new ChatMessage({
             chat: chatId,
             user: userId,
@@ -67,6 +63,37 @@ export class MongoChatRepository extends ChatRepository {
             .populate("participant_one", "-password")
             .populate("participant_two", "-password");
     }
+
+    async getChatNotifyById(chatId, userId) {
+
+        const chat = await Chat.findById(chatId)
+            .populate("participant_one", "-password")
+            .populate("participant_two", "-password");
+
+        const participant = chat.participant_one._id == userId ? chat.participant_one : chat.participant_two;
+        let lastMessage = await ChatMessage.findOne({ chat: chatId }).sort({ createdAt: -1 });
+
+        if (participant.role.name === "customer") {
+            const customer = await Customer.findOne({ user: userId });
+            return {
+                role: participant.role.name,
+                idUser: participant._id,
+                name: customer.name,
+                idChat: chat._id,
+                last_message_chat: lastMessage.createdAt
+            };
+        } else {
+            const employee = await Employee.findOne({ user: user._id });
+            return {
+                role: participant.role.name,
+                idUser: participant._id,
+                name: employee.name,
+                idChat: chat._id,
+                last_message_chat: lastMessage.createdAt
+            };
+        }
+
+    }
     async findAllChatsByUserId(userId) {
 
         const allChats = [];
@@ -80,8 +107,11 @@ export class MongoChatRepository extends ChatRepository {
     
         for (const chat of chats) {
 
+
             const id = chat.participant_one != userId ? chat.participant_one : chat.participant_two;
+
             const user = await User.findOne({ _id: id }).populate("role");
+
             let lastMessage = await ChatMessage.findOne({ chat: chat._id }).sort({ createdAt: -1 });
 
             if (user.role.name === "customer") {
