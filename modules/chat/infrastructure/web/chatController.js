@@ -94,13 +94,6 @@ const sendMessageChat = async (req,resp) =>{
         const { chat_id, message } = req.body;
         const { user_id } = req.user;
 
-        console.log("CUAL ES CHAT ID")
-        console.log(chat_id);
-
-        console.log("CUAL ES EL MENSAJE")
-        console.log(message)
-
-    
 
         const response = await chatService.sendMessageChat(chat_id,message,user_id);
   

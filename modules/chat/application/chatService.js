@@ -101,12 +101,10 @@ export class ChatService {
                 const idParcipant = chat.participant_one._id != userId ? chat.participant_one._id : chat.participant_two._id;
                 const notifyChat = await this.repositories.chatRepository.getChatNotifyById(chatId, userId);
                 io.sockets.in(`user_channel_${idParcipant}`).emit("message_notify", notifyChat);
-
+                console.log(`user_channel_${idParcipant}`);
                 console.log("total de mensajes ::1")
             }
-            console.log(`Emitiendo mensaje al canal ${chatId}`);
             io.sockets.in(chatId).emit("message", data);
-            console.log(`Emitiendo notificación de mensaje al canal ${chatId}_notify`);
             io.sockets.in(`${chatId}_notify`).emit("message_notify", data);
     
             return {
