@@ -97,7 +97,8 @@ export class ChatService {
     
             console.log("Total mensajes");
             console.log(this.getTotalMessages(chatId));
-            if (this.getTotalMessages(chatId) == 1) {
+            const totalMessages = await this.getTotalMessages(chatId);
+            if (totalMessages == 1) {
 
                 console.log("Entro en el total a 1")
                 const chat = await this.getChatById(chatId);
