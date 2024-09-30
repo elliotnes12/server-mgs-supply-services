@@ -100,7 +100,8 @@ export class ChatService {
             const totalMessages = await this.getTotalMessages(chatId);
             if (totalMessages == 1) {
 
-                console.log("Entro en el total a 1")
+
+                console.log("Entro en el total a 1 XXXXX")
                 const chat = await this.getChatById(chatId);
                 const idParcipant = chat.participant_one._id != userId ? chat.participant_one._id : chat.participant_two._id;
                 const notifyChat = await this.repositories.chatRepository.getChatNotifyById(chatId, userId);
