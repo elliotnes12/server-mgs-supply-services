@@ -23,6 +23,8 @@ export class ChatService {
 
         }
         catch (error) {
+            console.log("Error getLastMessageByChatId")
+            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error getLastMessageByChatId" } };
         }
 
