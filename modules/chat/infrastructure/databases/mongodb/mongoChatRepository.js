@@ -70,23 +70,26 @@ export class MongoChatRepository extends ChatRepository {
             .populate("participant_one", "-password")
             .populate("participant_two", "-password");
 
-        const participant = chat.participant_one._id == userId ? chat.participant_one : chat.participant_two;
+
+        const user = await User.findOne({ _id: userId }).populate("role");
+
         let lastMessage = await ChatMessage.findOne({ chat: chatId }).sort({ createdAt: -1 });
 
-        if (participant.role.name === "customer") {
+        if (user.role.name === "customer") {
             const customer = await Customer.findOne({ user: userId });
             return {
-                role: participant.role.name,
-                idUser: participant._id,
+                role: user.role.name,
+                idUser: user._id,
                 name: customer.name,
                 idChat: chat._id,
                 last_message_chat: lastMessage.createdAt
             };
         } else {
-            const employee = await Employee.findOne({ user: user._id });
+            const employee = await Employee.findOne({ user: userId });
+
             return {
-                role: participant.role.name,
-                idUser: participant._id,
+                role: user.role.name,
+                idUser: user._id,
                 name: employee.name,
                 idChat: chat._id,
                 last_message_chat: lastMessage.createdAt

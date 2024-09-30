@@ -94,20 +94,17 @@ export class ChatService {
     async sendMessageChat(chatId, message, userId) {
         try {
             const data = await this.repositories.chatRepository.sendMessageChat(chatId, message, userId);
-    
-            console.log("Total mensajes");
+
             const totalMessages = await this.getTotalMessages(chatId);
-            console.log(totalMessages.data.total)
+
             if (totalMessages.data?.total == 1) {
 
+                const { data } = await this.getChatById(chatId);
 
-                console.log("Entro en el total a 1 XXXXX")
-                const chat = await this.getChatById(chatId);
-                const idParcipant = chat.participant_one._id != userId ? chat.participant_one._id : chat.participant_two._id;
+                const idParcipant = data.participant_one._id != userId ? data.participant_one._id : data.participant_two._id;
                 const notifyChat = await this.repositories.chatRepository.getChatNotifyById(chatId, userId);
                 io.sockets.in(`user_channel_${idParcipant}`).emit("message_notify", notifyChat);
-                console.log(`user_channel_${idParcipant}`);
-                console.log("total de mensajes ::1")
+
             }
             io.sockets.in(chatId).emit("message", data);
             io.sockets.in(`${chatId}_notify`).emit("message_notify", data);
@@ -116,6 +113,7 @@ export class ChatService {
                 meta: { code: 200, module: "CHAT", message: "Mensaje enviado" }, data: data
             };
         } catch (error) {
+            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error sendMessageChat" + "- chatId- " + chatId + "-userId-" + userId } };
         }
     }
