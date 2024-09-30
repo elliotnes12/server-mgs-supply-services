@@ -19,7 +19,6 @@ export class MongoChatRepository extends ChatRepository {
 
     async getAllMessagesByChatId(chatId) {
 
-        console.log(chatId);
         const messages = await ChatMessage.find({ chat: chatId }).sort({ createdAt: 1 })
             .populate("user", "-password");
 
@@ -148,8 +147,7 @@ export class MongoChatRepository extends ChatRepository {
 
             }
         }
-    
-        console.log(allChats)
+
         return allChats;
     }
     

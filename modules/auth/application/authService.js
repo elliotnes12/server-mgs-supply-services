@@ -161,8 +161,6 @@ export class AuthService {
 
         const { email, password, idEmployee, name, businessName, businessType } = userData;
 
-        console.log(userData);
-
         let idRole = undefined;
         let roleName = "customer";
         let active = false;

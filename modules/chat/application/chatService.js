@@ -13,7 +13,6 @@ export class ChatService {
 
         try {
 
-            console.log(chatId)
             const chat = await this.repositories.chatRepository.getLastMessageByChatId(chatId);
 
             return {
@@ -23,8 +22,6 @@ export class ChatService {
 
         }
         catch (error) {
-            console.log("Error getLastMessageByChatId")
-            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error getLastMessageByChatId" } };
         }
 
@@ -35,7 +32,6 @@ export class ChatService {
 
         try {
 
-            console.log(chatId)
             const total = await this.repositories.chatRepository.getTotalMessagesByChatId(chatId);
 
             return {
@@ -115,7 +111,6 @@ export class ChatService {
                 meta: { code: 200, module: "CHAT", message: "Mensaje enviado" }, data: data
             };
         } catch (error) {
-            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error sendMessageChat" + "- chatId- " + chatId + "-userId-" + userId } };
         }
     }
@@ -128,7 +123,6 @@ export class ChatService {
 
             const chat = await this.repositories.chatRepository.getChatById(chatId);
 
-            console.log(chat);
             return {
                 meta: { code: 200, module: "CHAT", message: "success" }, data: chat
             };
@@ -137,7 +131,6 @@ export class ChatService {
 
         }
         catch (error) {
-            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error" } };
         }
     }
@@ -164,7 +157,6 @@ export class ChatService {
 
         }
         catch (error) {
-            console.log(error)
             return { meta: { code: 404, module: "CHAT", message: "Error" } };
         }
     }

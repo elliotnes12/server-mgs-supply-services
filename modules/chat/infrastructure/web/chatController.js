@@ -29,6 +29,7 @@ const getLastMessageByChatId = async (req,resp) =>{
   
       }
       catch(error){
+
           return resp.status(400).send({meta:{code:400,message:"Error",module:"CHAT"}});
       }
 }
@@ -138,9 +139,6 @@ const getAllChatsByUserId = async (req,resp) =>{
 
         const { user_id } = req.user;
 
-        console.log("cual es");
-        console.log(user_id)
-
         const response = await chatService.getAll(user_id);
   
         return resp.status(response.meta.code).send(response);
@@ -179,8 +177,7 @@ const deleteChat = async (req, resp) => {
       return resp.status(response.meta.code).send(response);
 
     }
-    catch(error){
-        console.log(error);
+    catch (error) {
         return resp.status(400).send({meta:{code:400,message:"Error",module:"CHAT"}});
     }
 }

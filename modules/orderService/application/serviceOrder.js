@@ -21,7 +21,6 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            console.log(error);
             return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
         }
 
@@ -43,7 +42,6 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            console.log(error);
             return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
         }
 
@@ -63,7 +61,6 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            console.log(error);
             return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
         }
 
@@ -82,7 +79,6 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            console.log(error);
             return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
         }
 

@@ -7,8 +7,7 @@ import {Role } from "./entities/role.js";
 export class MongoRoleRepository extends RoleRepository{
 
 
-    async getRoleByName(name){
-        console.log(name)
+    async getRoleByName(name) {
         const role = await Role.findOne({ name: name });
         return role? role._id : undefined;
     }

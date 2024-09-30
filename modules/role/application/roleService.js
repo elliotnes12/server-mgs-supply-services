@@ -18,8 +18,7 @@ export class RoleService {
                 data: roles 
             };
         }
-        catch(error){
-            console.log(error);
+        catch (error) {
             return { meta: { code: 400, module: "ROLE", message: "Error" } };
         }
     }

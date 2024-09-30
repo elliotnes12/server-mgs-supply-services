@@ -44,7 +44,6 @@ export async function getRoleByCustomer(type) {
         idRole = role._id;
 
     } catch (e) {
-        console.log("fue error");
     }
 
 
