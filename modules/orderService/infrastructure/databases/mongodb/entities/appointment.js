@@ -4,7 +4,7 @@ import moment from "moment";
 const appointmentSchema = new mongoose.Schema({
   category: {
     type: String,
-    enum: ['cleaning'],
+    enum: ['cleaning', 'painting'],
     required: true
   },
   from: {

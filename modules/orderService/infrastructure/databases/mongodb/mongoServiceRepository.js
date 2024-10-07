@@ -29,6 +29,15 @@ export class MongoServiceRepository extends IServiceRepository {
             .sort({ status: 1 }).skip(skip).limit(limit)
     }
 
+
+    async findAllByIdCustomer(page = 1, limit = 20, id_customer) {
+
+        const skip = (page - 1) * limit;
+
+        return Appointment.find({ customer: id_customer })
+            .sort({ status: 1 }).skip(skip).limit(limit)
+    }
+
     async findAll(limit) {
         return Appointment.find().sort({ status: 1 })
             .limit(limit > 0 ? limit : undefined)

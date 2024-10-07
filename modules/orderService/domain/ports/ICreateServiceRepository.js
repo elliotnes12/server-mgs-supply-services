@@ -7,6 +7,9 @@ export class IServiceRepository {
     findAllByIdSupervisor(id) {
         throw new Error("Method 'find' must be implemented.")
     }
+    findAllByIdCustomer(id) {
+        throw new Error("Method 'find' must be implemented.")
+    }
     findAll() {
         throw new Error("Method 'find' must be implemented.")
     }

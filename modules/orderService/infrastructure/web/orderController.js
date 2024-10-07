@@ -45,6 +45,24 @@ const findAllByIdSupervisor = async (req, resp) => {
       }
 }
 
+const findAllByIdCustomer = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const { id_customer } = req.params;
+
+        const response = await serviceOrder.findAllByIdCustomer(page, limit, id_customer);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+    }
+}
+
 
 const assignServiceOrder = async (req,resp) =>{
 
@@ -80,5 +98,6 @@ export const orderController = {
    save,
     findAll,
     findAllByIdSupervisor,
+    findAllByIdCustomer,
    assignServiceOrder
 }

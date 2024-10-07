@@ -8,6 +8,7 @@ const api = express.Router();
 
 api.post("/service-order", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.save);
 api.get("/services/orders/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
+api.get("/services/orders/customer/:id_customer", [mdAuth.asureAuth], orderController.findAllByIdCustomer);
 api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 
