@@ -15,7 +15,7 @@ export class ServiceOrder {
             const response = await this.repositories.orderRepository.save(order);
 
             return {
-                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+                meta: { code: 201, module: "SERVICE_ORDER", message: "success" }, data: response
             };
 
 
@@ -84,6 +84,25 @@ export class ServiceOrder {
 
     }
 
+
+    //'in_progress'
+    async findAllByStatus(limit, status) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findAllServicesByInProgress(limit, status);
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+        }
+
+    }
 
 
     async findAll(limit) {

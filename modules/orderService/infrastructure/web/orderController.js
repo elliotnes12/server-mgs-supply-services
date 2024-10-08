@@ -63,6 +63,22 @@ const findAllByIdCustomer = async (req, resp) => {
     }
 }
 
+const findAllByStatus = async (req, resp) => {
+
+    try {
+
+        const limit = parseInt(req.query.limit) || 20;
+        const { status } = req.params;
+
+        const response = await serviceOrder.findAllByStatus(limit, status);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+    }
+}
 
 const assignServiceOrder = async (req,resp) =>{
 
@@ -99,5 +115,6 @@ export const orderController = {
     findAll,
     findAllByIdSupervisor,
     findAllByIdCustomer,
+    findAllByStatus,
    assignServiceOrder
 }
