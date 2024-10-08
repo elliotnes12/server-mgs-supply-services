@@ -54,9 +54,10 @@ export class MongoServiceRepository extends IServiceRepository {
 
         const skip = (page - 1) * limit;
 
-        return await Appointment.find({ status: 'in_progress' }).select("-comments -photos -customer -address")
+        return await Appointment.find({ status: 'in_progress' }).select("-comments -photos -customer -address -hour -until")
             .populate({ path: "employees", select: "-active -user -type -__v" })
             .populate({ path: "supervisor", select: "-active -user -type -__v" })
+            .populate({ path: "customer", select: "-user -__v" })
             .sort({ createdAt: -1 })
             .skip(skip).limit(limit)
     }

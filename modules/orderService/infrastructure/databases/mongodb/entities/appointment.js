@@ -71,6 +71,13 @@ appointmentSchema.virtual("formattedTime").get(function () {
   return moment(this.hour, "HH:mm").format("HH:mm A");
 });
 
+appointmentSchema.virtual("formattedFrom").get(function () {
+  if (!this.from || !moment(this.from, "YYYY-MM-DD").isValid()) {
+    return "";
+  }
+  return moment(this.from).format("MMMM D, YYYY");
+});
+
 appointmentSchema.set("toJSON", {
   virtuals: true,
   transform: function (doc, ret) {
