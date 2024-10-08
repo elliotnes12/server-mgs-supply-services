@@ -21,7 +21,7 @@ const findAll = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -39,7 +39,7 @@ const findAllByIdSupervisor = async (req, resp) => {
   
       }
       catch(error){
-          return resp.status(400).send({meta:{code:400,message:"Error",module:"SERVICE_ORDER"}});
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
       }
 }
 
@@ -57,7 +57,7 @@ const findAllByIdCustomer = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -75,8 +75,26 @@ const findAllByStatus = async (req, resp) => {
 
     }
     catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
+const findAllByManager = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+
+        const response = await serviceOrder.findAllByManager(limit);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
         console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -151,5 +169,6 @@ export const orderController = {
     findAllByStatus,
     findAllByInProgress,
     assignServiceOrder,
-    updateStatus
+    updateStatus,
+    findAllByManager
 }

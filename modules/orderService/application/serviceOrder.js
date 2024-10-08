@@ -102,6 +102,24 @@ export class ServiceOrder {
 
     }
 
+    async findAllByManager(limit) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findAllByManager(limit);
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+        }
+
+    }
+
     async findAllByInProgress(page, limit) {
 
         try {

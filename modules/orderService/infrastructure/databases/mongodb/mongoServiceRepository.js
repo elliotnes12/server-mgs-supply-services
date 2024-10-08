@@ -50,6 +50,13 @@ export class MongoServiceRepository extends IServiceRepository {
             .limit(limit);
     }
 
+    async findAllByManager(limit) {
+        return await Appointment.find()
+            .populate("customer")
+            .sort({ createdAt: -1 })
+            .limit(limit);
+    }
+
     async findAllByInProgress(page = 1, limit = 20) {
 
         const skip = (page - 1) * limit;
