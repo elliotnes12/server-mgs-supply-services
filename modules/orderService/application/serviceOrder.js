@@ -137,4 +137,22 @@ export class ServiceOrder {
 
     }
 
+
+    async updateStatus(id, status) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.updateStatus(id, status);
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+        }
+
+    }
+
 }

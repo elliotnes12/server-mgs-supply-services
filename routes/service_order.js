@@ -13,7 +13,7 @@ api.get("/services/orders/all/:status", [mdAuth.asureAuth], orderController.find
 api.get("/services/orders/workflow", [mdAuth.asureAuth], orderController.findAllByInProgress);
 api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
-
+api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
 
 
 export const orderRoutes = api;

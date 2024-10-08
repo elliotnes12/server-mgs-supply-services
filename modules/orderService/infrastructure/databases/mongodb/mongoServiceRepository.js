@@ -62,6 +62,14 @@ export class MongoServiceRepository extends IServiceRepository {
             .skip(skip).limit(limit)
     }
 
+    async updateStatus(id, status) {
+
+        return await Appointment.findOneAndUpdate(
+            { _id: id },
+            { status: status },
+            { new: true }
+        );
+    }
 
 }
 

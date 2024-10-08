@@ -94,7 +94,7 @@ const findAllByInProgress = async (req, resp) => {
     }
     catch (error) {
         console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -109,7 +109,7 @@ const assignServiceOrder = async (req,resp) =>{
   
       }
       catch(error){
-          return resp.status(400).send({meta:{code:400,message:"Error",module:"SERVICE_ORDER"}});
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
       }
 }
 
@@ -124,8 +124,23 @@ const save = async (req,resp) =>{
   
       }
       catch(error){
-          return resp.status(400).send({meta:{code:400,message:"Error",module:"SERVICE_ORDER"}});
-      }
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
+const updateStatus = async (req, resp) => {
+
+    try {
+
+        const { status, id } = req.body;
+        const response = await serviceOrder.updateStatus(id, status);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
 }
 
 export const orderController = {
@@ -135,5 +150,6 @@ export const orderController = {
     findAllByIdCustomer,
     findAllByStatus,
     findAllByInProgress,
-    assignServiceOrder
+    assignServiceOrder,
+    updateStatus
 }
