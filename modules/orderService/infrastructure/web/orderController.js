@@ -75,6 +75,7 @@ const findAllByStatus = async (req, resp) => {
 
     }
     catch (error) {
+        console.log(error)
         return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
     }
 }
@@ -92,6 +93,7 @@ const findAllByInProgress = async (req, resp) => {
 
     }
     catch (error) {
+        console.log(error)
         return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
     }
 }

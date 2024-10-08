@@ -79,7 +79,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
         }
 
     }
@@ -97,7 +97,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
         }
 
     }
@@ -106,7 +106,7 @@ export class ServiceOrder {
 
         try {
 
-            const response = await this.repositories.orderRepository.findAllServicesByInProgress(page, limit);
+            const response = await this.repositories.orderRepository.findAllByInProgress(page, limit);
 
             return {
                 meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
@@ -115,7 +115,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
         }
 
     }
@@ -132,7 +132,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
         }
 
     }
