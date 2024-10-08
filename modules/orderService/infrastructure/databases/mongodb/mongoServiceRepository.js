@@ -43,12 +43,23 @@ export class MongoServiceRepository extends IServiceRepository {
             .limit(limit > 0 ? limit : undefined)
     }
 
-    async findAllServicesByInProgress(limit, status) {
+    async findAllServicesByInStatus(limit, status) {
         return await Appointment.find({ status: status })
             .populate("customer")
             .sort({ createdAt: -1 })
             .limit(limit);
     }
+
+    async findAllByInProgress(page = 1, limit = 20) {
+
+        const skip = (page - 1) * limit;
+
+        return await Appointment.find({ status: 'in_progress' })
+            .populate("customer")
+            .sort({ createdAt: -1 })
+            .skip(skip).limit(limit)
+    }
+
 
 }
 

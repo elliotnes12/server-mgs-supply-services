@@ -1,8 +1,6 @@
 import { ServiceOrder } from "../../application/serviceOrder.js";
 import { MongoServiceRepository } from "../databases/mongodb/mongoServiceRepository.js";
 
-
-
 const repositories = {
     orderRepository: new MongoServiceRepository(),
 }
@@ -67,10 +65,28 @@ const findAllByStatus = async (req, resp) => {
 
     try {
 
+        const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 20;
         const { status } = req.params;
 
         const response = await serviceOrder.findAllByStatus(limit, status);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "SERVICE_ORDER" } });
+    }
+}
+
+const findAllByInProgress = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const response = await serviceOrder.findAllByInProgress(page, limit);
 
         return resp.status(response.meta.code).send(response);
 
@@ -111,10 +127,11 @@ const save = async (req,resp) =>{
 }
 
 export const orderController = {
-   save,
+    save,
     findAll,
     findAllByIdSupervisor,
     findAllByIdCustomer,
     findAllByStatus,
-   assignServiceOrder
+    findAllByInProgress,
+    assignServiceOrder
 }

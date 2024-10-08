@@ -10,6 +10,7 @@ api.post("/service-order", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], o
 api.get("/services/orders/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
 api.get("/services/orders/customer/:id_customer", [mdAuth.asureAuth], orderController.findAllByIdCustomer);
 api.get("/services/orders/all/:status", [mdAuth.asureAuth], orderController.findAllByStatus);
+api.get("/services/orders/workflow", [mdAuth.asureAuth], orderController.findAllByInProgress);
 api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 
