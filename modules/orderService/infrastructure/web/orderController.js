@@ -98,6 +98,26 @@ const findAllByManager = async (req, resp) => {
     }
 }
 
+const findOneById = async (req, resp) => {
+
+    try {
+
+
+        const { id } = req.params;
+
+        const response = await serviceOrder.findOneById(id);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        console.log(error)
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
+
+
 const findAllByInProgress = async (req, resp) => {
 
     try {
@@ -170,5 +190,6 @@ export const orderController = {
     findAllByInProgress,
     assignServiceOrder,
     updateStatus,
-    findAllByManager
+    findAllByManager,
+    findOneById
 }

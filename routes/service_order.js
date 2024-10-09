@@ -15,6 +15,7 @@ api.get("/services/orders/workflow", [mdAuth.asureAuth], orderController.findAll
 api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
+api.get("/services/order/:id", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.findOneById);
 
 
 export const orderRoutes = api;

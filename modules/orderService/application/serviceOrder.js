@@ -155,6 +155,24 @@ export class ServiceOrder {
 
     }
 
+    async findOneById(id) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findById(id);
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+        }
+
+    }
+
+
 
     async updateStatus(id, status) {
 
