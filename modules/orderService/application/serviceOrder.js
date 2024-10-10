@@ -66,6 +66,21 @@ export class ServiceOrder {
 
     }
 
+    async findAllServicesByEmployeeId(page, limit, idEmployee) {
+        try {
+
+            const response = await this.repositories.orderRepository.findAllServicesByEmployeeId(idEmployee, page, limit);
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+        }
+    }
+
     async findAllByIdCustomer(page, limit, id_customer) {
 
         try {
