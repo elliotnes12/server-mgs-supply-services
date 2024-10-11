@@ -41,7 +41,6 @@ const findAllEmployees = async (req, resp) => {
 
     }
     catch (error) {
-
         return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
     }
 };
