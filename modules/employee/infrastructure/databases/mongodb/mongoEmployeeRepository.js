@@ -24,6 +24,18 @@ export class MongoEmployeeRepository extends EmployeeRepository {
         return await Employee.find(filter);    
     }
 
+    async findAllEmployees() {
+        return await Employee.find({
+            type: 'employee'
+        })
+    }
+
+    async findEmployeeByName(name) {
+        return await Employee.find({
+            name: { $regex: new RegExp(name, 'i') }
+        });
+    }
+
     async findEmployeeById(idEmployee) {
         return await Employee.findOne({ idEmployee: idEmployee });
     }

@@ -25,7 +25,39 @@ const findAll = async (req, resp) => {
     }
     catch (error) {
 
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
+    }
+};
+
+const findAllEmployees = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const response = await employeeService.findAllEmployees(page, limit);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
+    }
+};
+
+const findEmployeeById = async (req, resp) => {
+
+    try {
+
+        const { id_employee } = req.params;
+        const response = await employeeService.findEmployeeById(id_employee);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
     }
 };
 
@@ -42,7 +74,23 @@ const findAllByUser = async (req, resp) => {
     }
     catch (error) {
 
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
+    }
+};
+
+
+const findEmployeesByName = async (req, resp) => {
+
+    try {
+
+        const { name } = req.body;
+        const response = await employeeService.findEmployeesByName(name);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
     }
 };
 
@@ -57,7 +105,7 @@ const createEmployee = async (req, resp) => {
     }
     catch (error) {
 
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "EMPLOYEE" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
     }
 };
 
@@ -65,5 +113,8 @@ const createEmployee = async (req, resp) => {
 export const employeeController = {
     createEmployee,
     findAll,
-    findAllByUser
+    findAllEmployees,
+    findAllByUser,
+    findEmployeeById,
+    findEmployeesByName
 }
