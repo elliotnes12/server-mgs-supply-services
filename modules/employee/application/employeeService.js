@@ -62,10 +62,10 @@ export class EmployeeService {
         }
     }
 
-    async findEmployeesByName(name) {
+    async findEmployeesByName(name, page, limit) {
         try {
 
-            const employee = await this.repositories.employeeRepository.findEmployeeByName(name);
+            const employee = await this.repositories.employeeRepository.findEmployeeByName(name, page, limit);
             console.log(employee)
             if (employee == null || employee?.length == 0) {
                 throw new Error("Employees not found");

@@ -82,8 +82,13 @@ const findEmployeesByName = async (req, resp) => {
 
     try {
 
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+
         const { name } = req.body;
-        const response = await employeeService.findEmployeesByName(name);
+        const response = await employeeService.findEmployeesByName(name, page, limit);
         return resp.status(response.meta.code).send(response);
 
     }
