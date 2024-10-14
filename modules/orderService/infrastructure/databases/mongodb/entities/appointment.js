@@ -45,7 +45,7 @@ const appointmentSchema = new mongoose.Schema({
     ref: 'Employee'
   },
   photos: [{
-    type: String 
+    type: String
   }],
   comments: {
     type: String
@@ -55,7 +55,7 @@ const appointmentSchema = new mongoose.Schema({
     enum: ['pending', 'in_progress', 'completed', 'cancelled'],
     default: 'in_progress'
   }
-});
+}, { timestamps: true }); 
 
 appointmentSchema.virtual("formattedDate").get(function () {
   if (!this.from || !moment(this.from, "YYYY-MM-DD").isValid()) {
