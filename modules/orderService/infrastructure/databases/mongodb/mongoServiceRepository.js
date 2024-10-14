@@ -26,7 +26,7 @@ export class MongoServiceRepository extends IServiceRepository {
 
         return Appointment.find({ supervisor: id_supervisor })
             .populate("customer")
-            .sort({ status: 1 }).skip(skip).limit(limit)
+            .sort({ createdAt: -1 }).skip(skip).limit(limit)
     }
 
 
@@ -35,7 +35,7 @@ export class MongoServiceRepository extends IServiceRepository {
         const skip = (page - 1) * limit;
 
         return Appointment.find({ customer: id_customer })
-            .sort({ status: 1 }).skip(skip).limit(limit)
+            .sort({ createdAt: -1 }).skip(skip).limit(limit)
     }
 
     async findAll(limit) {
