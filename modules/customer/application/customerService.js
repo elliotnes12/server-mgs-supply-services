@@ -28,10 +28,10 @@ export class CustomerService {
 
         try {
 
-            const employee = await this.repositories.customerRepository.findByName(name, page, limit);
+            const customer = await this.repositories.customerRepository.findByName(name, page, limit);
 
-            if (employee == null || employee == undefined) {
-                throw new Exception();
+            if (customer == undefined || customer.length == 0) {
+                throw new Error("customers not found");
             }
             return {
                 meta: { code: 200, module: "CUSTOMER", message: "success" },
@@ -40,7 +40,27 @@ export class CustomerService {
         }
         catch (error) {
 
-            return { meta: { code: 404, module: "CUSTOMER", message: "The name does not exist" } };
+            return { meta: { code: 404, module: "CUSTOMER", message: error.message } };
+        }
+    }
+
+    async findByEmail(email) {
+
+        try {
+
+            const customer = await this.repositories.customerRepository.findByEmail(email);
+
+            if (customer == null) {
+                throw new Error("customer not found");
+            }
+            return {
+                meta: { code: 200, module: "CUSTOMER", message: "success" },
+                data: customer
+            };
+        }
+        catch (error) {
+
+            return { meta: { code: 404, module: "CUSTOMER", message: error.message } };
         }
     }
 
@@ -48,19 +68,20 @@ export class CustomerService {
 
         try{
 
-            const employee = await this.repositories.customerRepository.findByBusinessName(businessName);
+            const customer = await this.repositories.customerRepository.findByBusinessName(businessName);
 
-            if (employee == null || employee == undefined) {
-                throw new Exception();
+
+            if (customer == undefined || customer.length == 0) {
+                throw new Error("customers not found");
             }
             return {
                 meta: { code: 200, module: "CUSTOMER", message: "success" },
-                data: employee
+                data: customer
             };
         }
         catch(error){
 
-            return { meta: { code: 404, module: "CUSTOMER", message: "The businessName does not exist" } };
+            return { meta: { code: 404, module: "CUSTOMER", message: error.message } };
         }
     }
 

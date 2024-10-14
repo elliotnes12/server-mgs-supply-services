@@ -89,8 +89,6 @@ export class MongoServiceRepository extends IServiceRepository {
     async findAllServicesByEmployeeId(employeeId, page = 1, limit = 20) {
         const skip = (page - 1) * limit;
 
-        console.log("buscando")
-        console.log(employeeId)
         return Appointment.find({ employees: employeeId })
             .populate("customer")
             .populate("employees", "-active -user -type -__v")

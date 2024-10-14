@@ -75,7 +75,7 @@ export class UserService {
             const user = await this.repositories.userRepository.findUserByEmailWithRole(email)
 
             if (user == null || user == undefined) {
-                throw new Exception();
+                throw new Error("customer not found");
             }
             return { meta: { code: 200, module: "USER", message: "success" }, data: user };
 

@@ -51,6 +51,9 @@ export class EmployeeService {
 
             const employees = await this.repositories.employeeRepository.findAllEmployees(page, limit);
 
+            if (employees?.length == 0) {
+                throw new Error("employees not found")
+            }
             return {
                 meta: { code: 200, module: "EMPLOYEE", message: "success" },
                 data: employees 

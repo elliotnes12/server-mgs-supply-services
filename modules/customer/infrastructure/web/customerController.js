@@ -24,7 +24,7 @@ const findAll = async (req,resp) =>{
     }
     catch(error){
 
-        return resp.status(400).send({meta:{code:400,message:"Error",module:"CUSTOMER"}});
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "CUSTOMER" } });
     }
 };
 
@@ -39,7 +39,7 @@ const findByBusinessName = async (req, resp) => {
     }
     catch (error) {
 
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "CUSTOMER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "CUSTOMER" } });
     }
 }
 const findByName = async (req, resp) => {
@@ -55,7 +55,22 @@ const findByName = async (req, resp) => {
     }
     catch (error) {
 
-        return resp.status(400).send({ meta: { code: 400, message: "Error", module: "CUSTOMER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "CUSTOMER" } });
+    }
+}
+
+const findByEmail = async (req, resp) => {
+
+    try {
+        const { email } = req.body;
+
+        const response = await customerService.findByEmail(email);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "CUSTOMER" } });
     }
 }
 
@@ -69,7 +84,7 @@ const createCustomer = async (req,resp) =>{
     }
     catch(error){
 
-        return resp.status(400).send({meta:{code:400,message:"Error",module:"CUSTOMER"}});
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "CUSTOMER" } });
     }
 };
 
@@ -78,5 +93,6 @@ export const customerController = {
     createCustomer,
     findAll,
     findByName,
+    findByEmail,
     findByBusinessName
 }

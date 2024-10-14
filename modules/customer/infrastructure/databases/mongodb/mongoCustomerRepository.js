@@ -4,7 +4,7 @@ import { Customer } from "./entities/Customer.js";
 
 export class MongoCustomerRepository extends CustomerRepository {
 
-    async save(dataCustomer){
+    async save(dataCustomer) {
 
         const customer = new Customer(dataCustomer);
         return customer.save();
@@ -30,6 +30,15 @@ export class MongoCustomerRepository extends CustomerRepository {
         return await Customer.find({
             name: { $regex: new RegExp(name, "i") }
         }).skip(skip).limit(limit);
+    }
+
+    async findByEmail(email) {
+
+        return await Customer.findOne().populate({
+            path: "user",
+            select: "-password -active -validationCode -validationCodeExpires -role -__v",
+            match: { email: email }
+        });
     }
 
 

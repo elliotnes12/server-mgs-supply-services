@@ -12,4 +12,7 @@ api.post("/customer/find-by-business", [mdAuth.asureAuth], customerController.fi
 
 api.post("/customer/find-by-name", [mdAuth.asureAuth], customerController.findByName);
 
+api.post("/customer/find-by-email", [mdAuth.asureAuth], customerController.findByEmail);
+
+
 export const customerRoutes = api;
