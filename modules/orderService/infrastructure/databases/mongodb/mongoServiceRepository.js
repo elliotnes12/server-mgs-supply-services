@@ -69,6 +69,19 @@ export class MongoServiceRepository extends IServiceRepository {
             .skip(skip).limit(limit)
     }
 
+    async findAllByInProgressAndSupervisor(page = 1, limit = 20, supervisor) {
+
+        const skip = (page - 1) * limit;
+
+        return await Appointment.find({ status: 'in_progress', supervisor: supervisor })
+            .select("-comments -photos -customer -address -hour -until")
+            .populate({ path: "employees", select: "-active -user -type -__v" })
+            .populate({ path: "supervisor", select: "-active -user -type -__v" })
+            .populate({ path: "customer", select: "-user -__v" })
+            .sort({ createdAt: -1 })
+            .skip(skip).limit(limit)
+    }
+
     async updateStatus(id, status) {
 
         return await Appointment.findOneAndUpdate(

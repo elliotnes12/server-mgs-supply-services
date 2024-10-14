@@ -154,6 +154,26 @@ const findAllByInProgress = async (req, resp) => {
     }
 }
 
+
+const findAllByInProgressAndSupervisor = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const { id_supervisor } = req.params;
+
+        const response = await serviceOrder.findAllByInProgressAndSupervisor(page, limit, id_supervisor);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        console.log(error)
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
 const assignServiceOrder = async (req,resp) =>{
 
     try{
@@ -184,6 +204,20 @@ const save = async (req,resp) =>{
     }
 }
 
+const update = async (req, resp) => {
+
+    try {
+
+        const response = await serviceOrder.update(req.body);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
 const updateStatus = async (req, resp) => {
 
     try {
@@ -206,8 +240,10 @@ export const orderController = {
     findAllByIdCustomer,
     findAllByStatus,
     findAllByInProgress,
+    findAllByInProgressAndSupervisor,
     assignServiceOrder,
     updateStatus,
+    update,
     findAllByManager,
     findOneById,
     findAllServicesByEmployeeId

@@ -21,11 +21,38 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: message.error } };
         }
 
     }
 
+
+    async update(order) {
+        try {
+            const { id, ...fieldsToUpdate } = order;
+
+            const updateFields = {};
+            Object.keys(fieldsToUpdate).forEach(key => {
+                if (fieldsToUpdate[key] !== undefined) {
+                    updateFields[key] = fieldsToUpdate[key];
+                }
+            });
+
+            console.log(id);
+
+            console.log(updateFields);
+
+
+            const response = await this.repositories.orderRepository.updateOrder(id, updateFields);
+
+            return {
+                meta: { code: 201, module: "SERVICE_ORDER", message: "success" },
+                data: response
+            };
+        } catch (error) {
+            return { meta: { code: 500, module: "SERVICE_ORDER", message: error.message } };
+        }
+    }
 
     async assignServiceOrder(id, employees) {
 
@@ -130,7 +157,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }
@@ -148,10 +175,30 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }
+
+
+    async findAllByInProgressAndSupervisor(page, limit, supervisor) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findAllByInProgressAndSupervisor(page, limit, supervisor);
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+
+    }
+
 
     async findAll(limit) {
 
@@ -165,7 +212,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }
@@ -182,7 +229,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }
@@ -201,7 +248,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }
