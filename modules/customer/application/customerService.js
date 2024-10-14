@@ -49,7 +49,7 @@ export class CustomerService {
         try {
 
             const customer = await this.repositories.customerRepository.findByEmail(email);
-
+            console.log(customer)
             if (customer == null) {
                 throw new Error("customer not found");
             }

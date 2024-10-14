@@ -34,11 +34,17 @@ export class MongoCustomerRepository extends CustomerRepository {
 
     async findByEmail(email) {
 
-        return await Customer.findOne().populate({
+        const customer = await Customer.findOne().populate({
             path: "user",
             select: "-password -active -validationCode -validationCodeExpires -role -__v",
             match: { email: email }
         });
+
+        if (!customer || !customer.user) {
+            return null;
+        }
+
+        return customer;
     }
 
 
