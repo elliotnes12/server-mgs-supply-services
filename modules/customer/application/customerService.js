@@ -35,7 +35,7 @@ export class CustomerService {
             }
             return {
                 meta: { code: 200, module: "CUSTOMER", message: "success" },
-                data: employee
+                data: customer
             };
         }
         catch (error) {

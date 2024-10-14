@@ -28,7 +28,7 @@ export class MongoCustomerRepository extends CustomerRepository {
 
         const skip = (page - 1) * limit;
         return await Customer.find({
-            name: { $regex: new RegExp(name, "i") }
+            name: { $regex: new RegExp(name, 'i') }
         }).skip(skip).limit(limit);
     }
 
