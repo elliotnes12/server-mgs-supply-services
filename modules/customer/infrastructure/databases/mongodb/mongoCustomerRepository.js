@@ -21,7 +21,7 @@ export class MongoCustomerRepository extends CustomerRepository {
 
         return await Customer.find({
             businessName: { $regex: new RegExp(businessName, "i") }
-        });
+        }).populate("user", "-password -active -validationCode -validationCodeExpires -role -__v");
     }
 
     async findByName(name, page = 1, limit = 20) {
@@ -29,7 +29,9 @@ export class MongoCustomerRepository extends CustomerRepository {
         const skip = (page - 1) * limit;
         return await Customer.find({
             name: { $regex: new RegExp(name, 'i') }
-        }).skip(skip).limit(limit);
+        }).
+            populate("user", "-password -active -validationCode -validationCodeExpires -role -__v").
+            skip(skip).limit(limit);
     }
 
     async findByEmail(email) {
