@@ -38,11 +38,6 @@ export class ServiceOrder {
                 }
             });
 
-            console.log(id);
-
-            console.log(updateFields);
-
-
             const response = await this.repositories.orderRepository.updateOrder(id, updateFields);
 
             return {
@@ -104,7 +99,25 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+    }
+
+    async findAllServicesByInProgressAndEmployeeId(page, limit, idEmployee) {
+        try {
+
+            const data = await this.repositories.orderRepository.findAllServicesByInProgressAndEmployeeId(idEmployee, page, limit);
+
+            if (data.length == 0) {
+                throw new Error("Services not found");
+            }
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: data
+            };
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
     }
 
@@ -121,7 +134,7 @@ export class ServiceOrder {
 
         }
         catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
         }
 
     }

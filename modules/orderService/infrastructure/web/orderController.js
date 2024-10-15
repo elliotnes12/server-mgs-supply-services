@@ -174,6 +174,26 @@ const findAllByInProgressAndSupervisor = async (req, resp) => {
     }
 }
 
+
+const findAllByInProgressAndEmployee = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+        const { id_employee } = req.params;
+
+        const response = await serviceOrder.findAllServicesByInProgressAndEmployeeId(page, limit, id_employee);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        console.log(error)
+        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+    }
+}
+
 const assignServiceOrder = async (req,resp) =>{
 
     try{
@@ -246,5 +266,6 @@ export const orderController = {
     update,
     findAllByManager,
     findOneById,
-    findAllServicesByEmployeeId
+    findAllServicesByEmployeeId,
+    findAllByInProgressAndEmployee
 }

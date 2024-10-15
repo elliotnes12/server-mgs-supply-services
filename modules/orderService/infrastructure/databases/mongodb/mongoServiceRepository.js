@@ -111,6 +111,18 @@ export class MongoServiceRepository extends IServiceRepository {
             .limit(limit);
     }
 
+    async findAllServicesByInProgressAndEmployeeId(employeeId, page = 1, limit = 20) {
+        const skip = (page - 1) * limit;
+
+        return Appointment.find({ employees: employeeId, status: 'in_progress' })
+            .populate("customer")
+            .populate("employees", "-active -user -type -__v")
+            .populate("supervisor", "-active -user -type -__v")
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit);
+    }
+
 }
 
 
