@@ -19,6 +19,6 @@ api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
 api.put("/service-order/update", [mdAuth.asureAuth], orderController.update);
 api.get("/services/order/:id", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.findOneById);
-api.post("/service-order/complete", [mdAuth.asureAuth, mdAuth.upload.array('images', 10)], orderController.completeService);
+api.post("/service/order/complete", [mdAuth.asureAuth, mdAuth.upload.array('images', 10)], orderController.completeService);
 
 export const orderRoutes = api;
