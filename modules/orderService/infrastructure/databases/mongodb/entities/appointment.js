@@ -89,3 +89,5 @@ appointmentSchema.set("toJSON", {
 });
 
 export const Appointment = mongoose.model('Appointment', appointmentSchema);
+
+

@@ -1,5 +1,7 @@
 import { ServiceOrder } from "../../application/serviceOrder.js";
 import { MongoServiceRepository } from "../databases/mongodb/mongoServiceRepository.js";
+import { v2 as cloudinary } from 'cloudinary';
+
 
 const repositories = {
     orderRepository: new MongoServiceRepository(),
@@ -253,6 +255,53 @@ const updateStatus = async (req, resp) => {
     }
 }
 
+
+const completeService = async (req, resp) => {
+    try {
+
+        const { id, status } = req.body;
+
+        if (!req.files || req.files.length === 0) {
+            return resp.status(400).send({
+                meta: { code: 400, message: "No images uploaded", module: "SERVICE_ORDER" }
+            });
+        }
+
+        const imageUploadPromises = req.files.map(async (file) => {
+            try {
+                const uploadResult = await cloudinary.uploader.upload(file.path, {
+                    folder: 'uploads',
+                    public_id: file.originalname.split('.')[0],
+                    resource_type: 'image'
+                });
+                return uploadResult.secure_url;
+            } catch (error) {
+                throw new Error(`Error uploading image: ${file.originalname}`);
+            }
+        });
+
+        const imageUrls = await Promise.all(imageUploadPromises);
+
+        const body = {
+            photos: imageUrls,
+            id: id,
+            status: status
+        };
+
+        const response = await serviceOrder.update(body);
+
+        return resp.status(response.meta.code).send(response);
+
+
+    } catch (error) {
+        console.log(error)
+        return resp.status(500).send({
+            meta: { code: 500, message: "Error uploading images", module: "SERVICE_ORDER" }
+        });
+    }
+};
+
+
 export const orderController = {
     save,
     findAll,
@@ -267,5 +316,6 @@ export const orderController = {
     findAllByManager,
     findOneById,
     findAllServicesByEmployeeId,
-    findAllByInProgressAndEmployee
+    findAllByInProgressAndEmployee,
+    completeService
 }

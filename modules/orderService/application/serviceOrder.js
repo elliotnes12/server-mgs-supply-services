@@ -41,7 +41,7 @@ export class ServiceOrder {
             const response = await this.repositories.orderRepository.updateOrder(id, updateFields);
 
             return {
-                meta: { code: 201, module: "SERVICE_ORDER", message: "success" },
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" },
                 data: response
             };
         } catch (error) {
@@ -247,8 +247,6 @@ export class ServiceOrder {
 
     }
 
-
-
     async updateStatus(id, status) {
 
         try {
@@ -265,5 +263,7 @@ export class ServiceOrder {
         }
 
     }
+
+
 
 }

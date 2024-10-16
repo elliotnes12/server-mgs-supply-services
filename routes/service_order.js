@@ -3,7 +3,6 @@ import { mdValidate } from "../middlewares/validate.js";
 import { mdAuth } from "../middlewares/authenticated.js";
 import { orderController } from "../modules/orderService/infrastructure/web/orderController.js";
 
-
 const api = express.Router();
 
 api.post("/service-order", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.save);
@@ -20,6 +19,6 @@ api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
 api.put("/service-order/update", [mdAuth.asureAuth], orderController.update);
 api.get("/services/order/:id", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.findOneById);
-
+api.post("/service-order/upload-images", [mdAuth.asureAuth, mdAuth.upload.array('images', 10)], orderController.completeService);
 
 export const orderRoutes = api;
