@@ -139,6 +139,97 @@ export class ServiceOrder {
 
     }
 
+    async findServiceByIdCustomerAndTicket(id_customer, ticket) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findServiceByIdCustomerAndTicket(id_customer, ticket);
+
+            if (response == null) {
+                throw new Error("Service not found");
+            }
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+
+    }
+
+    async findServiceByIdSupervisorAndTicket(id_supervisor, ticket) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findServicesByIdSupervisorAndTicket(id_supervisor, ticket);
+
+            if (response == null) {
+                throw new Error("Service not found");
+            }
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+
+    }
+
+
+    async findServiceByIdEmployeeAndTicket(id_employee, ticket) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findAllServicesByIdEmployeeAndTicket(id_employee, ticket);
+
+            if (response == null) {
+                throw new Error("Service not found");
+            }
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+
+
+    }
+
+    async findServiceByTicket(ticket) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.findServiceByTicket(ticket);
+            console.log(response)
+            if (response == null) {
+                throw new Error("Service not found");
+            }
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
+        }
+
+    }
+
+
     async findAllByManager(page, limit) {
 
         try {

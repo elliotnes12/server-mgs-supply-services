@@ -65,6 +65,73 @@ const findAllByIdCustomer = async (req, resp) => {
     }
 }
 
+const findServiceByCustomerAndTicket = async (req, resp) => {
+
+    try {
+
+        const { id_customer, id_ticket } = req.params;
+
+        const response = await serviceOrder.findServiceByIdCustomerAndTicket(id_customer, id_ticket);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
+const findServiceBySupervisorAndTicket = async (req, resp) => {
+
+    try {
+
+        const { id_supervisor, id_ticket } = req.params;
+
+        const response = await serviceOrder.findServiceByIdSupervisorAndTicket(id_supervisor, id_ticket);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
+const findServiceByEmployeeAndTicket = async (req, resp) => {
+
+    try {
+
+        const { id_employee, id_ticket } = req.params;
+
+        const response = await serviceOrder.findServiceByIdEmployeeAndTicket(id_employee, id_ticket);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
+const findServiceByTicket = async (req, resp) => {
+
+    try {
+
+        const { id_ticket } = req.params;
+
+        console.log(id_ticket)
+
+        const response = await serviceOrder.findServiceByTicket(id_ticket);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
+
 const findAllByManager = async (req, resp) => {
 
     try {
@@ -277,5 +344,9 @@ export const orderController = {
     findOneById,
     findAllServicesByEmployeeId,
     findAllByInProgressAndEmployee,
-    completeService
+    completeService,
+    findServiceByCustomerAndTicket,
+    findServiceBySupervisorAndTicket,
+    findServiceByEmployeeAndTicket,
+    findServiceByTicket
 }

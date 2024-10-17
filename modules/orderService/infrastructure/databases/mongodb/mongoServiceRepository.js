@@ -38,6 +38,32 @@ export class MongoServiceRepository extends IServiceRepository {
             .sort({ createdAt: -1 }).skip(skip).limit(limit)
     }
 
+    async findServiceByIdCustomerAndTicket(id_customer, ticket) {
+
+        return Appointment.findOne({ customer: id_customer, ticket: ticket });
+    }
+
+    async findServiceByTicket(ticket) {
+        console.log(ticket)
+        return Appointment.findOne({ ticket: ticket });
+    }
+
+    async findServicesByIdSupervisorAndTicket(id_supervisor, ticket) {
+
+        return Appointment.findOne({ supervisor: id_supervisor, ticket: ticket })
+            .populate("customer");
+    }
+
+    async findAllServicesByIdEmployeeAndTicket(employeeId, ticket) {
+        const skip = (page - 1) * limit;
+
+        return Appointment.findOne({ employees: employeeId, ticket })
+            .populate("customer")
+            .populate("employees", "-active -user -type -__v")
+            .populate("supervisor", "-active -user -type -__v");
+    }
+
+
     async findAll(limit) {
         return Appointment.find().sort({ status: 1 })
             .limit(limit > 0 ? limit : undefined)

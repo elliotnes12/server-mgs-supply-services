@@ -18,5 +18,9 @@ api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
 api.put("/service-order/update", [mdAuth.asureAuth], orderController.update);
 api.get("/services/order/:id", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.findOneById);
 api.post("/service/order/complete", [mdAuth.asureAuth, mdAuth.upload.array('images', 10)], orderController.completeService);
+api.get("/services/orders/supervisor/:id_supervisor/:id_ticket", [mdAuth.asureAuth], orderController.findServiceBySupervisorAndTicket);
+api.get("/services/orders/customer/:id_customer/:id_ticket", [mdAuth.asureAuth], orderController.findServiceByCustomerAndTicket);
+api.get("/services/orders/employee/:id_employee/:id_ticket", [mdAuth.asureAuth], orderController.findServiceByEmployeeAndTicket);
+api.get("/services/orders/ticket/:id_ticket", [mdAuth.asureAuth], orderController.findServiceByTicket);
 
 export const orderRoutes = api;
