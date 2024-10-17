@@ -44,8 +44,8 @@ export class MongoServiceRepository extends IServiceRepository {
     }
 
     async findServiceByTicket(ticket) {
-        console.log(ticket)
-        return Appointment.findOne({ ticket: ticket });
+        return Appointment.findOne({ ticket: ticket })
+            .populate("customer");
     }
 
     async findServicesByIdSupervisorAndTicket(id_supervisor, ticket) {
