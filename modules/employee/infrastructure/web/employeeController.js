@@ -35,25 +35,9 @@ const findAllEmployees = async (req, resp) => {
 
         const page = parseInt(req.query.page) || 1;
         const limit = parseInt(req.query.limit) || 20;
+        const { type } = req.params;
 
-        const response = await employeeService.findAllEmployees(page, limit);
-        return resp.status(response.meta.code).send(response);
-
-    }
-    catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
-    }
-};
-
-
-const findAllSupervisores = async (req, resp) => {
-
-    try {
-
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-
-        const response = await employeeService.findAllSupervisores(page, limit);
+        const response = await employeeService.findAllEmployees(page, limit, type);
         return resp.status(response.meta.code).send(response);
 
     }
@@ -66,8 +50,8 @@ const findEmployeeById = async (req, resp) => {
 
     try {
 
-        const { id_employee } = req.params;
-        const response = await employeeService.findEmployeeById(id_employee);
+        const { id_employee, type } = req.params;
+        const response = await employeeService.findEmployeeById(id_employee, type);
         return resp.status(response.meta.code).send(response);
 
     }
@@ -104,8 +88,8 @@ const findEmployeesByName = async (req, resp) => {
         const limit = parseInt(req.query.limit) || 20;
 
 
-        const { name } = req.body;
-        const response = await employeeService.findEmployeesByName(name, page, limit);
+        const { name, type } = req.body;
+        const response = await employeeService.findEmployeesByName(name, page, limit, type);
         return resp.status(response.meta.code).send(response);
 
     }
@@ -138,5 +122,4 @@ export const employeeController = {
     findAllByUser,
     findEmployeeById,
     findEmployeesByName,
-    findAllSupervisores
 }

@@ -24,30 +24,26 @@ export class MongoEmployeeRepository extends EmployeeRepository {
         return await Employee.find(filter);    
     }
 
-    async findAllEmployees(page = 1, limit = 20) {
+    async findAllEmployees(page = 1, limit = 20, type) {
         const skip = (page - 1) * limit;
         return await Employee.find({
-            type: 'employee'
-        }).skip(skip).limit(limit)
-    }
-
-    async findAllSupervisores(page = 1, limit = 20) {
-        const skip = (page - 1) * limit;
-        return await Employee.find({
-            type: 'supervisor'
+            type: type,
+            user: { $ne: null }
         }).skip(skip).limit(limit)
     }
 
 
-    async findEmployeeByName(name, page = 1, limit = 20) {
+    async findEmployeeByName(name, page = 1, limit = 20, type) {
         const skip = (page - 1) * limit;
         return await Employee.find({
-            name: { $regex: new RegExp(name, 'i') }
+            name: { $regex: new RegExp(name, 'i') },
+            type: type,
+            user: { $ne: null }
         }).skip(skip).limit(limit);
     }
 
-    async findEmployeeById(idEmployee) {
-        return await Employee.findOne({ idEmployee: idEmployee });
+    async findEmployeeById(idEmployee, type) {
+        return await Employee.findOne({ idEmployee: idEmployee, type: type, user: { $ne: null } });
     }
 
 

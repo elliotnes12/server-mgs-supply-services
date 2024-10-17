@@ -26,11 +26,11 @@ export class EmployeeService {
 
     }
 
-    async findEmployeeById(employeeId) {
+    async findEmployeeById(employeeId, type) {
 
         try {
 
-            const employee = await this.repositories.employeeRepository.findEmployeeById(employeeId);
+            const employee = await this.repositories.employeeRepository.findEmployeeById(employeeId, type);
 
             if (employee == null) {
                 throw new Error("Employee not found");
@@ -45,11 +45,11 @@ export class EmployeeService {
         }
 
     }
-    async findAllEmployees(page, limit) {
+    async findAllEmployees(page, limit, type) {
 
         try{
 
-            const employees = await this.repositories.employeeRepository.findAllEmployees(page, limit);
+            const employees = await this.repositories.employeeRepository.findAllEmployees(page, limit, type);
 
             if (employees?.length == 0) {
                 throw new Error("employees not found")
@@ -65,30 +65,10 @@ export class EmployeeService {
         }
     }
 
-    async findAllSupervisores(page, limit) {
-
+    async findEmployeesByName(name, page, limit, type) {
         try {
 
-            const employees = await this.repositories.employeeRepository.findAllSupervisores(page, limit);
-
-            if (employees?.length == 0) {
-                throw new Error("supervisores not found")
-            }
-            return {
-                meta: { code: 200, module: "EMPLOYEE", message: "success" },
-                data: employees
-            };
-        }
-        catch (error) {
-
-            return { meta: { code: 400, module: "EMPLOYEE", message: error.message } };
-        }
-    }
-
-    async findEmployeesByName(name, page, limit) {
-        try {
-
-            const employee = await this.repositories.employeeRepository.findEmployeeByName(name, page, limit);
+            const employee = await this.repositories.employeeRepository.findEmployeeByName(name, page, limit, type);
             console.log(employee)
             if (employee == null || employee?.length == 0) {
                 throw new Error("Employees not found");
