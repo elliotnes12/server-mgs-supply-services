@@ -6,13 +6,13 @@ import { orderController } from "../modules/orderService/infrastructure/web/orde
 const api = express.Router();
 
 api.post("/service-order", [mdAuth.asureAuth, mdValidate.parseDateMiddleware], orderController.save);
-api.get("/services/orders/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
 api.get("/services/orders/in-progress/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByInProgressAndSupervisor);
 api.get("/services/orders/in-progress/employee/:id_employee", [mdAuth.asureAuth], orderController.findAllByInProgressAndEmployee);
 api.get("/services/orders/customer/:id_customer", [mdAuth.asureAuth], orderController.findAllByIdCustomer);
 api.get("/services/orders/employee/:id_employee", [mdAuth.asureAuth], orderController.findAllServicesByEmployeeId);
+api.get("/services/orders/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
+api.get("/services/orders/manager", [mdAuth.asureAuth], orderController.findAllByManager);
 api.get("/services/orders/all/:status", [mdAuth.asureAuth], orderController.findAllByStatus);
-api.get("/services/orders/manager/all", [mdAuth.asureAuth], orderController.findAllByManager);
 api.get("/services/orders/workflow", [mdAuth.asureAuth], orderController.findAllByInProgress);
 api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
