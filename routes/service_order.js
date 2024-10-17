@@ -12,9 +12,7 @@ api.get("/services/orders/customer/:id_customer", [mdAuth.asureAuth], orderContr
 api.get("/services/orders/employee/:id_employee", [mdAuth.asureAuth], orderController.findAllServicesByEmployeeId);
 api.get("/services/orders/supervisor/:id_supervisor", [mdAuth.asureAuth], orderController.findAllByIdSupervisor);
 api.get("/services/orders/manager", [mdAuth.asureAuth], orderController.findAllByManager);
-api.get("/services/orders/all/:status", [mdAuth.asureAuth], orderController.findAllByStatus);
 api.get("/services/orders/workflow", [mdAuth.asureAuth], orderController.findAllByInProgress);
-api.get("/services/orders/all/:limit?", [mdAuth.asureAuth], orderController.findAll);
 api.put("/services", [mdAuth.asureAuth], orderController.assignServiceOrder);
 api.put("/service-order", [mdAuth.asureAuth], orderController.updateStatus);
 api.put("/service-order/update", [mdAuth.asureAuth], orderController.update);

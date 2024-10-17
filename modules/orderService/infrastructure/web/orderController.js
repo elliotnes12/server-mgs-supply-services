@@ -11,22 +11,6 @@ const repositories = {
 const serviceOrder = new ServiceOrder(repositories);
 
 
-
-const findAll = async (req, resp) => {
-    try {
-
-        const { limit } = req.params;
-
-        const response = await serviceOrder.findAll(limit);
-
-        return resp.status(response.meta.code).send(response);
-
-    }
-    catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
-    }
-}
-
 const findAllByIdSupervisor = async (req, resp) => {
 
     try{
@@ -41,7 +25,7 @@ const findAllByIdSupervisor = async (req, resp) => {
   
       }
       catch(error){
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
       }
 }
 
@@ -59,7 +43,7 @@ const findAllServicesByEmployeeId = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -77,25 +61,7 @@ const findAllByIdCustomer = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
-    }
-}
-
-const findAllByStatus = async (req, resp) => {
-
-    try {
-
-        const page = parseInt(req.query.page) || 1;
-        const limit = parseInt(req.query.limit) || 20;
-        const { status } = req.params;
-
-        const response = await serviceOrder.findAllByStatus(limit, status);
-
-        return resp.status(response.meta.code).send(response);
-
-    }
-    catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -107,14 +73,13 @@ const findAllByManager = async (req, resp) => {
         const limit = parseInt(req.query.limit) || 20;
 
 
-        const response = await serviceOrder.findAllByManager(limit);
+        const response = await serviceOrder.findAllByManager(page, limit);
 
         return resp.status(response.meta.code).send(response);
 
     }
     catch (error) {
-        console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -132,7 +97,7 @@ const findOneById = async (req, resp) => {
     }
     catch (error) {
         console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -151,8 +116,7 @@ const findAllByInProgress = async (req, resp) => {
 
     }
     catch (error) {
-        console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -171,8 +135,7 @@ const findAllByInProgressAndSupervisor = async (req, resp) => {
 
     }
     catch (error) {
-        console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -192,7 +155,7 @@ const findAllByInProgressAndEmployee = async (req, resp) => {
     }
     catch (error) {
         console.log(error)
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -207,7 +170,7 @@ const assignServiceOrder = async (req,resp) =>{
   
       }
       catch(error){
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
       }
 }
 
@@ -222,7 +185,7 @@ const save = async (req,resp) =>{
   
       }
       catch(error){
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -236,7 +199,7 @@ const update = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -251,7 +214,7 @@ const updateStatus = async (req, resp) => {
 
     }
     catch (error) {
-        return resp.status(400).send({ meta: { code: 400, message: error, module: "SERVICE_ORDER" } });
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
     }
 }
 
@@ -294,7 +257,6 @@ const completeService = async (req, resp) => {
 
 
     } catch (error) {
-        console.log(error)
         return resp.status(500).send({
             meta: { code: 500, message: "Error uploading images", module: "SERVICE_ORDER" }
         });
@@ -304,10 +266,8 @@ const completeService = async (req, resp) => {
 
 export const orderController = {
     save,
-    findAll,
     findAllByIdSupervisor,
     findAllByIdCustomer,
-    findAllByStatus,
     findAllByInProgress,
     findAllByInProgressAndSupervisor,
     assignServiceOrder,

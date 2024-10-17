@@ -139,29 +139,11 @@ export class ServiceOrder {
 
     }
 
-    async findAllByStatus(limit, status) {
+    async findAllByManager(page, limit) {
 
         try {
 
-            const response = await this.repositories.orderRepository.findAllServicesByStatus(limit, status);
-
-            return {
-                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
-            };
-
-
-        }
-        catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error } };
-        }
-
-    }
-
-    async findAllByManager(limit) {
-
-        try {
-
-            const response = await this.repositories.orderRepository.findAllByManager(limit);
+            const response = await this.repositories.orderRepository.findAllByManager(page, limit);
 
             return {
                 meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
@@ -212,23 +194,6 @@ export class ServiceOrder {
 
     }
 
-
-    async findAll(limit) {
-
-        try {
-
-            const response = await this.repositories.orderRepository.findAll(limit);
-            return {
-                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
-            };
-
-
-        }
-        catch (error) {
-            return { meta: { code: 404, module: "SERVICE_ORDER", message: error.message } };
-        }
-
-    }
 
     async findOneById(id) {
 
