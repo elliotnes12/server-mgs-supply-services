@@ -45,6 +45,23 @@ const findAllEmployees = async (req, resp) => {
     }
 };
 
+
+const findAllSupervisores = async (req, resp) => {
+
+    try {
+
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 20;
+
+        const response = await employeeService.findAllSupervisores(page, limit);
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "EMPLOYEE" } });
+    }
+};
+
 const findEmployeeById = async (req, resp) => {
 
     try {
@@ -120,5 +137,6 @@ export const employeeController = {
     findAllEmployees,
     findAllByUser,
     findEmployeeById,
-    findEmployeesByName
+    findEmployeesByName,
+    findAllSupervisores
 }

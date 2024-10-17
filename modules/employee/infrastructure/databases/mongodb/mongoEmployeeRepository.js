@@ -31,6 +31,14 @@ export class MongoEmployeeRepository extends EmployeeRepository {
         }).skip(skip).limit(limit)
     }
 
+    async findAllSupervisores(page = 1, limit = 20) {
+        const skip = (page - 1) * limit;
+        return await Employee.find({
+            type: 'supervisor'
+        }).skip(skip).limit(limit)
+    }
+
+
     async findEmployeeByName(name, page = 1, limit = 20) {
         const skip = (page - 1) * limit;
         return await Employee.find({

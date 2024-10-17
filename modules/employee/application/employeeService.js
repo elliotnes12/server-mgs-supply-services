@@ -65,6 +65,26 @@ export class EmployeeService {
         }
     }
 
+    async findAllSupervisores(page, limit) {
+
+        try {
+
+            const employees = await this.repositories.employeeRepository.findAllSupervisores(page, limit);
+
+            if (employees?.length == 0) {
+                throw new Error("supervisores not found")
+            }
+            return {
+                meta: { code: 200, module: "EMPLOYEE", message: "success" },
+                data: employees
+            };
+        }
+        catch (error) {
+
+            return { meta: { code: 400, module: "EMPLOYEE", message: error.message } };
+        }
+    }
+
     async findEmployeesByName(name, page, limit) {
         try {
 
