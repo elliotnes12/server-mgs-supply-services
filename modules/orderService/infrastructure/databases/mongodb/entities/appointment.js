@@ -55,6 +55,12 @@ const appointmentSchema = new mongoose.Schema({
   comments: {
     type: String
   },
+  rating: {
+    type: String
+  },
+  comments: {
+    type: String
+  },
   status: {
     type: String,
     enum: ['pending', 'in_progress', 'completed', 'cancelled'],
