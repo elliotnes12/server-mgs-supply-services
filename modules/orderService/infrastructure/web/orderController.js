@@ -328,7 +328,25 @@ const completeService = async (req, resp) => {
             meta: { code: 500, message: "Error uploading images", module: "SERVICE_ORDER" }
         });
     }
-};
+}
+
+
+const findAllTotalServicesByYear = async (req, resp) => {
+
+    try {
+
+        const { year } = req.params;
+
+        const response = await serviceOrder.findTotalServicesByYear(year);
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
 
 
 export const orderController = {
@@ -348,5 +366,6 @@ export const orderController = {
     findServiceByCustomerAndTicket,
     findServiceBySupervisorAndTicket,
     findServiceByEmployeeAndTicket,
-    findServiceByTicket
+    findServiceByTicket,
+    findAllTotalServicesByYear
 }

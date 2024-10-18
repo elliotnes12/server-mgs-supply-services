@@ -322,4 +322,23 @@ export class ServiceOrder {
 
 
 
+
+    async findTotalServicesByYear(year, status) {
+
+        try {
+
+            const response = await this.repositories.orderRepository.getServicesByYear(year);
+
+            return {
+                meta: { code: 200, module: "SERVICE_ORDER", message: "success" }, data: response
+            };
+
+
+        }
+        catch (error) {
+            return { meta: { code: 404, module: "SERVICE_ORDER", message: "Error" } };
+        }
+
+    }
+
 }
