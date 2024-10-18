@@ -348,6 +348,21 @@ const findAllTotalServicesByYear = async (req, resp) => {
 }
 
 
+const findAllTotalServicesByMonth = async (req, resp) => {
+
+    try {
+
+        const response = await serviceOrder.findTotalServicesByMonth();
+
+        return resp.status(response.meta.code).send(response);
+
+    }
+    catch (error) {
+        return resp.status(400).send({ meta: { code: 400, message: error.message, module: "SERVICE_ORDER" } });
+    }
+}
+
+
 
 export const orderController = {
     save,
@@ -367,5 +382,6 @@ export const orderController = {
     findServiceBySupervisorAndTicket,
     findServiceByEmployeeAndTicket,
     findServiceByTicket,
-    findAllTotalServicesByYear
+    findAllTotalServicesByYear,
+    findAllTotalServicesByMonth
 }

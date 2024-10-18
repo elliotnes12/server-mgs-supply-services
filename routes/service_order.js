@@ -23,5 +23,7 @@ api.get("/services/orders/customer/:id_customer/:id_ticket", [mdAuth.asureAuth],
 api.get("/services/orders/employee/:id_employee/:id_ticket", [mdAuth.asureAuth], orderController.findServiceByEmployeeAndTicket);
 api.get("/services/orders/ticket/:id_ticket", [mdAuth.asureAuth], orderController.findServiceByTicket);
 api.get("/services/orders/total/:year", [mdAuth.asureAuth], orderController.findAllTotalServicesByYear);
+api.get("/services/orders/total-by-month", [mdAuth.asureAuth], orderController.findAllTotalServicesByMonth);
+
 
 export const orderRoutes = api;

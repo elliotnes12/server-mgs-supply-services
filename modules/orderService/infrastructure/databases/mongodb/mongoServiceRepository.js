@@ -211,6 +211,47 @@ export class MongoServiceRepository extends IServiceRepository {
         };
     }
 
+    async getCurrentMonthTotals() {
+        const now = new Date();
+        const currentYear = now.getFullYear();
+        const currentMonth = now.getMonth() + 1; // Los meses en JavaScript son 0-indexed
+
+        const statuses = ['in_progress', 'cancelled', 'completed'];
+
+        const result = await Appointment.aggregate([
+            {
+                $match: {
+                    createdAt: {
+                        $gte: new Date(currentYear, currentMonth - 1, 1), // Primer día del mes actual
+                        $lt: new Date(currentYear, currentMonth, 1), // Primer día del siguiente mes
+                    },
+                    status: { $in: statuses },
+                },
+            },
+            {
+                $group: {
+                    _id: "$status",
+                    count: { $sum: 1 },
+                },
+            },
+        ]);
+
+        // Crear un objeto para almacenar los totales por estado
+        const totals = {
+            in_progress: 0,
+            cancelled: 0,
+            completed: 0,
+        };
+
+        // Asignar los valores obtenidos a los totales correspondientes
+        result.forEach((item) => {
+            totals[item._id] = item.count;
+        });
+
+        return totals; // Devolver el objeto con los totales
+    }
+
+
 }
 
 
