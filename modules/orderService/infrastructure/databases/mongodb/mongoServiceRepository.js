@@ -152,19 +152,19 @@ export class MongoServiceRepository extends IServiceRepository {
     }
 
     async getServicesByYear(year) {
-        const startDate = new Date(`${year}-01-01`);
-        const endDate = new Date(`${year + 1}-01-01`);
+        const startDate = new Date(`${year}-01-01T00:00:00Z`); // Inicio del año
+        const endDate = new Date(`${year}-12-31T00:00:00Z`); // Inicio del siguiente año
 
-        // Definimos los tres estados que queremos consultar
+        console.log(`Consultando servicios para el año: ${year}`);
+
         const statuses = ['in_progress', 'cancelled', 'completed'];
 
-        // Ejecutamos una consulta para los tres estados
         const result = await Appointment.aggregate([
             {
                 $match: {
                     createdAt: {
                         $gte: startDate,
-                        $lt: endDate,
+                        $lt: endDate, // Asegúrate de que esto sea menor que el siguiente año
                     },
                     status: { $in: statuses },
                 },
@@ -183,14 +183,16 @@ export class MongoServiceRepository extends IServiceRepository {
             },
         ]);
 
-        // Crear arrays con 12 posiciones y valores 0 para cada estado
+        console.log("Resultados de la consulta:", result); // Verifica los resultados
+
+        // Inicializa los arrays para los datos
         const inProgressData = Array(12).fill(0);
         const cancelledData = Array(12).fill(0);
         const completedData = Array(12).fill(0);
 
-        // Asignar los valores obtenidos a los meses correspondientes y estados
+        // Asigna los valores a los meses correspondientes
         result.forEach((item) => {
-            const monthIndex = item._id.month - 1;
+            const monthIndex = item._id.month - 1; // Meses de 0 a 11
             const status = item._id.status;
 
             if (status === 'in_progress') {
@@ -202,14 +204,11 @@ export class MongoServiceRepository extends IServiceRepository {
             }
         });
 
-        // Devolver un objeto con los tres arrays
-        const response = {
+        return {
             in_progress: inProgressData,
             cancelled: cancelledData,
             completed: completedData,
         };
-
-        return response;
     }
 
 }
