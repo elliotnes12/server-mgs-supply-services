@@ -123,6 +123,7 @@ export class MongoServiceRepository extends IServiceRepository {
         return await Appointment.findOne({
             _id: id
         }).populate({ path: "supervisor", select: "-active -user -type -__v" })
+            .populate("employees", "-active -user -type -__v")
             .populate({ path: "customer", select: "-user -__v" })
 
     }
