@@ -122,10 +122,16 @@ export class MongoServiceRepository extends IServiceRepository {
     async findById(id) {
         return await Appointment.findOne({
             _id: id
-        }).populate({ path: "supervisor", select: "-active -user -type -__v" })
+        }).populate({
+            path: "supervisor",
+            select: "-active -user -type -__v"
+        })
             .populate("employees", "-active -user -type -__v")
-            .populate({ path: "customer", select: "-user -__v" })
-
+            .populate({
+                path: "customer",
+                select: "-__v",
+                populate: { path: "user", select: "-__v -password -active -role -validationCode -validationCodeExpires" }
+            });
     }
 
     async findAllServicesByEmployeeId(employeeId, page = 1, limit = 20) {
